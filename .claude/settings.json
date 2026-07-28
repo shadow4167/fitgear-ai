@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell($machinePath = [System.Environment]::GetEnvironmentVariable\\('Path','Machine'\\); $userPath = [System.Environment]::GetEnvironmentVariable\\('Path','User'\\); $env:Path = $machinePath + ';' + $userPath; node -v; npm -v)",
+      "PowerShell(Get-ChildItem \"$env:ProgramFiles\\\\nodejs\" | Select-Object Name)",
+      "PowerShell($machinePath = [System.Environment]::GetEnvironmentVariable\\('Path','Machine'\\); $userPath = [System.Environment]::GetEnvironmentVariable\\('Path','User'\\); $env:Path = $machinePath + ';' + $userPath; \\(Get-Command npx.cmd\\).Source; \\(Get-Command node.exe\\).Source)",
+      "Bash(npm run *)",
+      "Skill(run)",
+      "Skill(run:*)",
+      "Bash(chromium-cli --help)",
+      "Bash(npx --yes playwright install chromium --with-deps)",
+      "Bash(node -e ' *)",
+      "Bash(netstat -ano)",
+      "Skill(loop)",
+      "Skill(loop:*)",
+      "Bash(npx tsc *)"
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell($content = Get-Content -Raw 'C:\\\\Users\\\\alokb\\\\.claude\\\\projects\\\\c--Users-alokb-OneDrive-Desktop-AI-App-Neil\\\\9877fd09-b9d5-478d-a809-b8fced631f94\\\\tool-results\\\\toolu_012AwcUPurBiEb3bpEDdLoQN.txt'; $content.Length)",
+      "PowerShell($content = Get-Content -Raw 'C:\\\\Users\\\\alokb\\\\.claude\\\\projects\\\\c--Users-alokb-OneDrive-Desktop-AI-App-Neil\\\\9877fd09-b9d5-478d-a809-b8fced631f94\\\\tool-results\\\\toolu_012AwcUPurBiEb3bpEDdLoQN.txt'; $out = $content.Substring\\(43000\\); Set-Content -Path 'C:\\\\Users\\\\alokb\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Users-alokb-OneDrive-Desktop-AI-App-Neil\\\\9877fd09-b9d5-478d-a809-b8fced631f94\\\\scratchpad\\\\tail.txt' -Value $out -Encoding utf8)",
+      "PowerShell(node -v)",
+      "PowerShell(npm -v)",
+      "PowerShell(winget --version)",
+      "PowerShell(winget install -e --id OpenJS.NodeJS.LTS --accept-source-agreements --accept-package-agreements)"
+    ]
+  }
+}
