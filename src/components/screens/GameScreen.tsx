@@ -20,6 +20,7 @@ import {
   drawGoalie,
   drawHelmetDrop,
   drawNet,
+  drawPassArrow,
   drawSaveCelebration,
   drawShooter,
   drawSkater,
@@ -164,10 +165,10 @@ export default function GameScreen({
 
   const [shotOriginX, setShotOriginX] = useState(PUCK_START.x);
   const [onIce, setOnIce] = useState<OnIceSkater[]>(() => generateOnIceSkaters(PUCK_START.x, ON_ICE_Y));
-  const [passArmed, setPassArmed] = useState(false);
   const [passedThisRound, setPassedThisRound] = useState(false);
   const [passResult, setPassResult] = useState<"success" | "intercepted" | null>(null);
   const laneBlocked = isLaneBlocked(shotOriginX, onIce);
+  const canPass = laneBlocked && !passedThisRound && !busy;
 
   const [countdownActive, setCountdownActive] = useState(true);
   const [roundKey, setRoundKey] = useState(0);
@@ -260,8 +261,13 @@ export default function GameScreen({
     if (!cel) {
       onIce.forEach((s) => {
         const jersey = s.role === "defender" ? opponentTeam.jerseyColor : userTeam.jerseyColor;
-        drawSkater(ctx, s.x, s.y, jersey, passArmed && s.role === "teammate");
+        drawSkater(ctx, s.x, s.y, jersey, canPass && s.role === "teammate");
       });
+      if (canPass) {
+        onIce
+          .filter((s) => s.role === "teammate")
+          .forEach((s) => drawPassArrow(ctx, shotOriginX, PUCK_START.y, s.x, s.y));
+      }
     }
 
     drawShooter(ctx, shotOriginX - 24, PUCK_START.y + 4, userTeam.jerseyColor, userTeam.trimColor, userTeam.crest, shooter.number, hit);
@@ -287,13 +293,12 @@ export default function GameScreen({
   useEffect(() => {
     draw();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userTeamId, passArmed, hit]);
+  }, [userTeamId, hit]);
 
   function resetRound() {
     setOnIce(generateOnIceSkaters(PUCK_START.x, ON_ICE_Y));
     setShotOriginX(PUCK_START.x);
     setPassedThisRound(false);
-    setPassArmed(false);
     setRoundKey((k) => k + 1);
     puckRef.current = { ...PUCK_START };
     trailRef.current = [];
@@ -362,12 +367,13 @@ export default function GameScreen({
   function handlePass(target: OnIceSkater) {
     const defender = onIce.find((s) => s.role === "defender");
     const outcome = resolvePass(target, defender);
-    setPassArmed(false);
     if (outcome === "success") {
       setShotOriginX(target.x);
       setPassedThisRound(true);
       setPassResult("success");
       passTimeoutRef.current = setTimeout(() => setPassResult(null), 700);
+      armCheckTimer();
+      setRoundKey((k) => k + 1);
       draw();
     } else {
       setBusy(true);
@@ -387,13 +393,12 @@ export default function GameScreen({
     const rawX = ((e.clientX - rect.left) / rect.width) * W;
     const rawY = ((e.clientY - rect.top) / rect.height) * H;
 
-    if (passArmed) {
-      const hit = onIce.find((s) => Math.hypot(s.x - rawX, s.y - rawY) < SKATER_HIT_RADIUS);
+    if (canPass) {
+      const hit = onIce.find((s) => s.role === "teammate" && Math.hypot(s.x - rawX, s.y - rawY) < SKATER_HIT_RADIUS);
       if (hit) {
         handlePass(hit);
         return;
       }
-      setPassArmed(false);
     }
 
     const targetX = Math.min(NET_X + NET_W - 14, Math.max(NET_X + 14, rawX));
@@ -419,7 +424,7 @@ export default function GameScreen({
         <BackButton onClick={onBack} />
         <div style={{ flex: 1 }}>
           <div style={{ fontFamily: "var(--font-archivo)", fontWeight: 700, fontSize: 20 }}>Shootout</div>
-          <div style={{ fontSize: 12, color: "#92A0B0" }}>Tap the net to shoot, Pass if blocked — don&rsquo;t wait too long</div>
+          <div style={{ fontSize: 12, color: "#92A0B0" }}>Tap the net to shoot, or tap a teammate to pass — don&rsquo;t wait too long</div>
         </div>
         <button
           onClick={onOpenShop}
@@ -465,30 +470,9 @@ export default function GameScreen({
         })}
       </div>
 
-      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
-        <div style={{ fontSize: 12.5, color: "#92A0B0", flex: 1 }}>
-          {stick.brand} {stick.model} · ${cheapestStore(stick).price} · Shot speed:{" "}
-          <span style={{ color: "var(--fg-brand)", fontWeight: 700 }}>{SPEED_LABEL[speedTier]}</span>
-        </div>
-        {laneBlocked && !passedThisRound && !busy && (
-          <button
-            onClick={() => setPassArmed((a) => !a)}
-            style={{
-              border: "none",
-              cursor: "pointer",
-              borderRadius: 10,
-              padding: "8px 12px",
-              fontFamily: "var(--font-hanken)",
-              fontWeight: 700,
-              fontSize: 12.5,
-              background: passArmed ? "var(--fg-brand)" : "#E6F1FB",
-              color: passArmed ? "#fff" : "var(--fg-brand)",
-              flexShrink: 0,
-            }}
-          >
-            {passArmed ? "Pick a teammate" : "Pass"}
-          </button>
-        )}
+      <div style={{ fontSize: 12.5, color: "#92A0B0", marginBottom: 10 }}>
+        {stick.brand} {stick.model} · ${cheapestStore(stick).price} · Shot speed:{" "}
+        <span style={{ color: "var(--fg-brand)", fontWeight: 700 }}>{SPEED_LABEL[speedTier]}</span>
       </div>
 
       {countdownActive && (

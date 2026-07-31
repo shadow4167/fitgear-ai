@@ -100,7 +100,8 @@ ${catalogListing()}`,
     }
 
     return Response.json({ reply: parsed.reply, rec });
-  } catch {
+  } catch (err) {
+    console.error("[api/chat] Gemini call failed, using deterministic fallback:", err);
     const fallback = deterministicChatReply(message, tier, position, budget);
     return Response.json({ reply: fallback.reply, rec: fallback.rec });
   }

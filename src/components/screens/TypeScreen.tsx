@@ -1,6 +1,7 @@
+import Image from "next/image";
 import { equipment } from "@/lib/gear-data";
 import type { EquipId } from "@/types/fitgear";
-import { ContinueButton, EquipIcon, StepHeader } from "./shared";
+import { ContinueButton, StepHeader } from "./shared";
 
 interface Props {
   equip: EquipId;
@@ -43,16 +44,21 @@ export default function TypeScreen({ equip, onBack, onSelectEquip, onContinue }:
             >
               <div
                 style={{
+                  position: "relative",
                   height: 54,
                   borderRadius: 11,
                   marginBottom: 11,
-                  background: "repeating-linear-gradient(135deg,#EAF3FB,#EAF3FB 6px,#DEEBF7 6px,#DEEBF7 12px)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
+                  background: "#EAF3FB",
+                  overflow: "hidden",
                 }}
               >
-                <EquipIcon id={e.id} size={26} color={active ? "var(--fg-brand)" : "#9DB4CA"} />
+                <Image
+                  src={`/equipment/${e.id}.png`}
+                  alt={e.name}
+                  fill
+                  sizes="160px"
+                  style={{ objectFit: "contain", padding: 6 }}
+                />
               </div>
               <div style={{ fontFamily: "var(--font-archivo)", fontWeight: 700, fontSize: 15 }}>{e.name}</div>
               <div style={{ fontSize: 11.5, color: "#92A0B0", marginTop: 2 }}>{e.desc}</div>

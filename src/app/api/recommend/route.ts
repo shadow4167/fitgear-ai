@@ -87,7 +87,8 @@ Write "why" as 1-2 sentences aimed at the player/parent explaining the top pick.
     };
 
     return Response.json(result);
-  } catch {
+  } catch (err) {
+    console.error("[api/recommend] Gemini call failed, using deterministic fallback:", err);
     return Response.json(deterministicRecommendation(equip, tier, position, budget));
   }
 }

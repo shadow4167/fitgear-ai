@@ -14,7 +14,7 @@ export const equipment: Equipment[] = [
 export const catalog: Record<EquipId, GearCatalogEntry> = {
   helmet: {
     category: "Helmet",
-    low: 55,
+    low: 49,
     avg: 224,
     high: 299,
     candidates: [
@@ -24,10 +24,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "FitLite",
         specs: ["CSA/HECC certified", "Fixed-fit shell", "Lightweight foam liner"],
         tierFit: ["Beginner", "House League"],
-        stores: [
-          { name: "Hockey Monkey", price: 79, cond: "New" },
-          { name: "SidelineSwap", price: 55, cond: "Used · Good" },
-        ],
+        stores: [{ name: "Hockey Monkey", price: 79, cond: "New" }],
       },
       {
         id: "helmet-ccm-tacks720",
@@ -35,10 +32,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "Tacks 720",
         specs: ["HECC certified", "Lighter shell", "Fewer fit adjustments"],
         tierFit: ["House League", "Travel"],
-        stores: [
-          { name: "Hockey Monkey", price: 189, cond: "New" },
-          { name: "SidelineSwap", price: 135, cond: "Used · Good" },
-        ],
+        stores: [{ name: "Hockey Monkey", price: 189, cond: "New" }],
       },
       {
         id: "helmet-bauer-reakt150",
@@ -49,7 +43,6 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         stores: [
           { name: "Pure Hockey", price: 219, cond: "New" },
           { name: "Hockey Monkey", price: 229, cond: "New" },
-          { name: "SidelineSwap", price: 165, cond: "Used · Like New" },
         ],
       },
       {
@@ -58,10 +51,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "Covert CF 100",
         specs: ["HECC certified", "Best ventilation", "Dial-fit adjustment"],
         tierFit: ["AA", "AAA"],
-        stores: [
-          { name: "Pure Hockey", price: 239, cond: "New" },
-          { name: "SidelineSwap", price: 172, cond: "Used · Good" },
-        ],
+        stores: [{ name: "Pure Hockey", price: 239, cond: "New" }],
       },
       {
         id: "helmet-true-dynamic9",
@@ -69,10 +59,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "Dynamic 9",
         specs: ["HECC certified", "Premium fit system", "Elite-level ventilation"],
         tierFit: ["AAA"],
-        stores: [
-          { name: "True", price: 259, cond: "New" },
-          { name: "SidelineSwap", price: 186, cond: "Used · Good" },
-        ],
+        stores: [{ name: "True", price: 259, cond: "New" }],
       },
       {
         id: "helmet-ccm-tacksxrz",
@@ -80,10 +67,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "Tacks XRZ",
         specs: ["HECC certified", "Adjustable dial fit", "Multi-density protection"],
         tierFit: ["AA", "AAA"],
-        stores: [
-          { name: "Hockey Monkey", price: 279, cond: "New" },
-          { name: "SidelineSwap", price: 195, cond: "Used · Good" },
-        ],
+        stores: [{ name: "Hockey Monkey", price: 279, cond: "New" }],
       },
       {
         id: "helmet-bauer-hyperlite2",
@@ -91,16 +75,92 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "Hyperlite 2",
         specs: ["HECC certified to 2030", "Lightest Bauer shell", "Pro-level ventilation"],
         tierFit: ["AAA"],
+        stores: [{ name: "Pure Hockey", price: 299, cond: "New" }],
+      },
+      {
+        id: "helmet-warrior-alphaonepro",
+        brand: "Warrior",
+        model: "Alpha One Pro",
+        specs: ["HECC certified", "Budget-friendly shell", "Basic fit adjustment"],
+        tierFit: ["Beginner"],
+        stores: [{ name: "Hockey Monkey", price: 59, cond: "New" }],
+      },
+      {
+        id: "helmet-bauer-reakt155youthcombo",
+        brand: "Bauer",
+        model: "Re-Akt 155 Youth Combo",
+        specs: ["HECC certified", "Helmet + cage combo included", "Youth-specific fit range"],
+        tierFit: ["Beginner", "House League"],
         stores: [
-          { name: "Pure Hockey", price: 299, cond: "New" },
-          { name: "SidelineSwap", price: 210, cond: "Used · Good" },
+          { name: "Hockey Monkey", price: 149, cond: "New" },
+          { name: "Pure Hockey", price: 159, cond: "New" },
+        ],
+      },
+      {
+        id: "helmet-sherwood-project8",
+        brand: "Sherwood",
+        model: "Project 8",
+        specs: ["HECC certified", "Budget-friendly shell", "Basic vent channels"],
+        tierFit: ["Beginner"],
+        stores: [{ name: "Hockey Monkey", price: 49, cond: "New" }],
+      },
+      {
+        id: "helmet-ccm-tacks310",
+        brand: "CCM",
+        model: "Tacks 310",
+        specs: ["HECC certified", "Adjustable dial fit", "Mid-tier foam liner"],
+        tierFit: ["House League", "Travel"],
+        stores: [
+          { name: "Pure Hockey", price: 139, cond: "New" },
+          { name: "Hockey Monkey", price: 145, cond: "New" },
+        ],
+      },
+      {
+        id: "helmet-bauer-reakt85",
+        brand: "Bauer",
+        model: "Re-Akt 85",
+        specs: ["HECC certified", "Adjustable vent slider", "Dual-density foam"],
+        tierFit: ["Beginner", "House League"],
+        stores: [
+          { name: "Hockey Monkey", price: 99, cond: "New" },
+          { name: "Pure Hockey", price: 105, cond: "New" },
+        ],
+      },
+      {
+        id: "helmet-ccm-tacks70",
+        brand: "CCM",
+        model: "Tacks 70",
+        specs: ["HECC certified", "Fixed-fit shell", "Lightweight liner"],
+        tierFit: ["Beginner"],
+        stores: [{ name: "Hockey Monkey", price: 65, cond: "New" }],
+      },
+      {
+        id: "helmet-warrior-covertcf200",
+        brand: "Warrior",
+        model: "Covert CF 200",
+        specs: ["HECC certified", "Elite ventilation", "Dial-fit adjustment"],
+        tierFit: ["AAA"],
+        stores: [
+          { name: "Pure Hockey", price: 269, cond: "New" },
+          { name: "Hockey Monkey", price: 275, cond: "New" },
+        ],
+      },
+      {
+        id: "helmet-true-dynamic6",
+        brand: "True",
+        model: "Dynamic 6",
+        specs: ["HECC certified", "Adjustable fit system", "Mid-tier ventilation"],
+        tierFit: ["Travel", "AA"],
+        stores: [
+          { name: "True", price: 199, cond: "New" },
+          { name: "Pure Hockey", price: 205, cond: "New" },
         ],
       },
     ],
   },
   skates: {
     category: "Skates",
-    low: 125,
+    low: 99,
     avg: 573,
     high: 799,
     candidates: [
@@ -110,10 +170,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "Vapor X3",
         specs: ["Molded boot", "Entry-level steel", "Reinforced ankle"],
         tierFit: ["Beginner", "House League"],
-        stores: [
-          { name: "Hockey Monkey", price: 229, cond: "New" },
-          { name: "SidelineSwap", price: 160, cond: "Used · Good" },
-        ],
+        stores: [{ name: "Hockey Monkey", price: 229, cond: "New" }],
       },
       {
         id: "skates-bauer-supremem5pro",
@@ -121,10 +178,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "Supreme M5 Pro",
         specs: ["Wider boot", "Best value in the lineup", "Pro-grade steel"],
         tierFit: ["House League", "Travel"],
-        stores: [
-          { name: "Pure Hockey", price: 599, cond: "New" },
-          { name: "SidelineSwap", price: 410, cond: "Used · Good" },
-        ],
+        stores: [{ name: "Pure Hockey", price: 599, cond: "New" }],
       },
       {
         id: "skates-bauer-vaporx5pro",
@@ -132,10 +186,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "Vapor X5 Pro",
         specs: ["Narrower fit", "Agile feel", "Pro-grade steel"],
         tierFit: ["Travel", "AA"],
-        stores: [
-          { name: "Hockey Monkey", price: 649, cond: "New" },
-          { name: "SidelineSwap", price: 445, cond: "Used · Good" },
-        ],
+        stores: [{ name: "Hockey Monkey", price: 649, cond: "New" }],
       },
       {
         id: "skates-ccm-jetspeedft6",
@@ -146,7 +197,6 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         stores: [
           { name: "Pure Hockey", price: 679, cond: "New" },
           { name: "Hockey Monkey", price: 699, cond: "New" },
-          { name: "SidelineSwap", price: 420, cond: "Used · Good" },
         ],
       },
       {
@@ -155,10 +205,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "TF9",
         specs: ["Custom-fit feel", "Premium carbon boot", "Pro-grade steel"],
         tierFit: ["AAA"],
-        stores: [
-          { name: "True", price: 749, cond: "New" },
-          { name: "SidelineSwap", price: 515, cond: "Used · Good" },
-        ],
+        stores: [{ name: "True", price: 749, cond: "New" }],
       },
       {
         id: "skates-ccm-tacksas580",
@@ -166,10 +213,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "Tacks AS-580",
         specs: ["Entry-level boot", "Anatomical fit", "Standard steel"],
         tierFit: ["Beginner", "House League"],
-        stores: [
-          { name: "Hockey Monkey", price: 179, cond: "New" },
-          { name: "SidelineSwap", price: 125, cond: "Used · Good" },
-        ],
+        stores: [{ name: "Hockey Monkey", price: 179, cond: "New" }],
       },
       {
         id: "skates-true-catalyst9x",
@@ -177,18 +221,82 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "Catalyst 9X",
         specs: ["Custom heat-mold", "Carbon composite boot", "Pro-grade steel"],
         tierFit: ["AAA"],
+        stores: [{ name: "True", price: 799, cond: "New" }],
+      },
+      {
+        id: "skates-bauer-vaporx4",
+        brand: "Bauer",
+        model: "Vapor X4",
+        specs: ["Heat-moldable boot", "Mid-range composite", "Pro-grade steel"],
+        tierFit: ["House League", "Travel"],
+        stores: [{ name: "Hockey Monkey", price: 349, cond: "New" }],
+      },
+      {
+        id: "skates-bauer-suprematrix",
+        brand: "Bauer",
+        model: "Supreme Matrix",
+        specs: ["Molded boot", "Entry-level steel", "Reinforced ankle"],
+        tierFit: ["Beginner", "House League"],
+        stores: [{ name: "Hockey Monkey", price: 149, cond: "New" }],
+      },
+      {
+        id: "skates-graf-pk7900",
+        brand: "Graf",
+        model: "PK7900",
+        specs: ["Heat-moldable boot", "Anatomical fit", "Pro-grade steel"],
+        tierFit: ["Travel", "AA"],
+        stores: [{ name: "Pure Hockey", price: 459, cond: "New" }],
+      },
+      {
+        id: "skates-true-catalyst7x",
+        brand: "True",
+        model: "Catalyst 7X",
+        specs: ["Heat-moldable boot", "Composite construction", "Pro-grade steel"],
+        tierFit: ["AA"],
+        stores: [{ name: "True", price: 549, cond: "New" }],
+      },
+      {
+        id: "skates-ccm-tacksas570",
+        brand: "CCM",
+        model: "Tacks AS-570",
+        specs: ["Entry-level boot", "Basic ankle support", "Standard steel"],
+        tierFit: ["Beginner"],
+        stores: [{ name: "Hockey Monkey", price: 99, cond: "New" }],
+      },
+      {
+        id: "skates-bauer-vaporx3pro",
+        brand: "Bauer",
+        model: "Vapor X3 Pro",
+        specs: ["Molded boot", "Reinforced ankle", "Pro-grade steel"],
+        tierFit: ["House League", "Travel"],
         stores: [
-          { name: "True", price: 799, cond: "New" },
-          { name: "SidelineSwap", price: 550, cond: "Used · Good" },
+          { name: "Hockey Monkey", price: 399, cond: "New" },
+          { name: "Pure Hockey", price: 409, cond: "New" },
         ],
+      },
+      {
+        id: "skates-warrior-alphalx2pro",
+        brand: "Warrior",
+        model: "Alpha LX2 Pro",
+        specs: ["Heat-moldable boot", "Anatomical fit", "Pro-grade steel"],
+        tierFit: ["Travel", "AA"],
+        stores: [{ name: "Pure Hockey", price: 499, cond: "New" }],
+      },
+      {
+        id: "skates-true-catalyst5x",
+        brand: "True",
+        model: "Catalyst 5X",
+        specs: ["Molded boot", "Lightweight composite", "Standard steel"],
+        tierFit: ["Beginner", "House League"],
+        stores: [{ name: "Hockey Monkey", price: 219, cond: "New" }],
       },
     ],
   },
   stick: {
     category: "Stick",
-    low: 55,
+    low: 39,
     avg: 242,
-    high: 289,
+    high: 299,
     candidates: [
       {
         id: "stick-sherwood-rekkerelementone",
@@ -196,10 +304,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "Rekker Element One",
         specs: ["Durable one-piece build", "Mid-kick point", "Beginner-friendly flex"],
         tierFit: ["Beginner", "House League"],
-        stores: [
-          { name: "Hockey Monkey", price: 79, cond: "New" },
-          { name: "SidelineSwap", price: 55, cond: "Used · Good" },
-        ],
+        stores: [{ name: "Hockey Monkey", price: 79, cond: "New" }],
       },
       {
         id: "stick-warrior-alphalx2pro",
@@ -207,10 +312,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "Alpha LX2 Pro",
         specs: ["Best value low-kick", "Lightweight carbon", "Grip finish"],
         tierFit: ["House League", "Travel"],
-        stores: [
-          { name: "Hockey Monkey", price: 229, cond: "New" },
-          { name: "SidelineSwap", price: 158, cond: "Used · Good" },
-        ],
+        stores: [{ name: "Hockey Monkey", price: 229, cond: "New" }],
       },
       {
         id: "stick-ccm-ribcortrigger8",
@@ -218,10 +320,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "Ribcor Trigger 8",
         specs: ["Quick release", "Lightweight carbon", "Grip finish"],
         tierFit: ["Travel", "AA"],
-        stores: [
-          { name: "Pure Hockey", price: 239, cond: "New" },
-          { name: "SidelineSwap", price: 165, cond: "Used · Good" },
-        ],
+        stores: [{ name: "Pure Hockey", price: 239, cond: "New" }],
       },
       {
         id: "stick-bauer-vaporhyperlite2",
@@ -232,7 +331,6 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         stores: [
           { name: "Hockey Monkey", price: 259, cond: "New" },
           { name: "Pure Hockey", price: 269, cond: "New" },
-          { name: "SidelineSwap", price: 175, cond: "Used · Good" },
         ],
       },
       {
@@ -241,10 +339,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "Project X",
         specs: ["Stiffest build", "Premium feel", "Low-kick point"],
         tierFit: ["AAA"],
-        stores: [
-          { name: "True", price: 279, cond: "New" },
-          { name: "SidelineSwap", price: 192, cond: "Used · Good" },
-        ],
+        stores: [{ name: "True", price: 279, cond: "New" }],
       },
       {
         id: "stick-bauer-nexusgeo",
@@ -252,10 +347,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "Nexus Geo",
         specs: ["Mid-kick point", "Nexus grip texture", "Lightweight carbon"],
         tierFit: ["Travel", "AA"],
-        stores: [
-          { name: "Pure Hockey", price: 249, cond: "New" },
-          { name: "SidelineSwap", price: 170, cond: "Used · Good" },
-        ],
+        stores: [{ name: "Pure Hockey", price: 249, cond: "New" }],
       },
       {
         id: "stick-ccm-jetspeedft6pro",
@@ -263,10 +355,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "JetSpeed FT6 Pro",
         specs: ["Low-kick point", "Ultra-lightweight carbon", "Quick-release flex profile"],
         tierFit: ["AA", "AAA"],
-        stores: [
-          { name: "Hockey Monkey", price: 289, cond: "New" },
-          { name: "SidelineSwap", price: 198, cond: "Used · Good" },
-        ],
+        stores: [{ name: "Hockey Monkey", price: 289, cond: "New" }],
       },
       {
         id: "stick-bauer-vaporflylite",
@@ -276,11 +365,62 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         tierFit: ["AA", "AAA"],
         stores: [{ name: "Hockey Monkey", price: 289, cond: "New" }],
       },
+      {
+        id: "stick-ccm-ribcortrigger8pro",
+        brand: "CCM",
+        model: "Ribcor Trigger 8 Pro",
+        specs: ["Elite quick release", "Ultra-lightweight carbon", "Low-kick point"],
+        tierFit: ["AAA"],
+        stores: [{ name: "Pure Hockey", price: 299, cond: "New" }],
+      },
+      {
+        id: "stick-sherwood-rekkerek15",
+        brand: "Sherwood",
+        model: "Rekker EK15",
+        specs: ["Two-piece flex option", "Mid-kick point", "Beginner-friendly flex"],
+        tierFit: ["Beginner"],
+        stores: [{ name: "Hockey Monkey", price: 39, cond: "New" }],
+      },
+      {
+        id: "stick-ccm-jetspeedft4",
+        brand: "CCM",
+        model: "JetSpeed FT4",
+        specs: ["Mid-kick point", "Lightweight carbon", "Grip finish"],
+        tierFit: ["House League"],
+        stores: [
+          { name: "Pure Hockey", price: 99, cond: "New" },
+          { name: "Hockey Monkey", price: 105, cond: "New" },
+        ],
+      },
+      {
+        id: "stick-warrior-covertqre20",
+        brand: "Warrior",
+        model: "Covert QRE20",
+        specs: ["Quick-release flex profile", "Lightweight carbon", "Grip finish"],
+        tierFit: ["Travel", "AA"],
+        stores: [{ name: "Pure Hockey", price: 219, cond: "New" }],
+      },
+      {
+        id: "stick-true-hzrdus3x",
+        brand: "True",
+        model: "HZRDUS 3X",
+        specs: ["Low-kick point", "Premium carbon layup", "Grip finish"],
+        tierFit: ["AAA"],
+        stores: [{ name: "True", price: 289, cond: "New" }],
+      },
+      {
+        id: "stick-bauer-vapor3xpro",
+        brand: "Bauer",
+        model: "Vapor 3X Pro",
+        specs: ["Mid-kick point", "Lightweight carbon", "Grip finish"],
+        tierFit: ["Travel"],
+        stores: [{ name: "Hockey Monkey", price: 189, cond: "New" }],
+      },
     ],
   },
   gloves: {
     category: "Gloves",
-    low: 48,
+    low: 39,
     avg: 141,
     high: 189,
     candidates: [
@@ -290,10 +430,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "Catalyst 9",
         specs: ["Best value", "Anatomical fit", "Wicking liner"],
         tierFit: ["Beginner", "House League"],
-        stores: [
-          { name: "True", price: 129, cond: "New" },
-          { name: "SidelineSwap", price: 90, cond: "Used · Good" },
-        ],
+        stores: [{ name: "True", price: 129, cond: "New" }],
       },
       {
         id: "gloves-ccm-jetspeedft4pro",
@@ -301,10 +438,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "JetSpeed FT4 Pro",
         specs: ["Looser, classic fit", "Reinforced thumb", "Wicking liner"],
         tierFit: ["House League", "Travel"],
-        stores: [
-          { name: "Hockey Monkey", price: 139, cond: "New" },
-          { name: "SidelineSwap", price: 97, cond: "Used · Good" },
-        ],
+        stores: [{ name: "Hockey Monkey", price: 139, cond: "New" }],
       },
       {
         id: "gloves-warrior-alphalx2pro",
@@ -315,7 +449,6 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         stores: [
           { name: "Pure Hockey", price: 149, cond: "New" },
           { name: "Hockey Monkey", price: 154, cond: "New" },
-          { name: "SidelineSwap", price: 95, cond: "Used · Like New" },
         ],
       },
       {
@@ -324,10 +457,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "Vapor Hyperlite",
         specs: ["Lightest option", "Tapered fit", "Wicking liner"],
         tierFit: ["AA", "AAA"],
-        stores: [
-          { name: "Pure Hockey", price: 159, cond: "New" },
-          { name: "SidelineSwap", price: 111, cond: "Used · Good" },
-        ],
+        stores: [{ name: "Pure Hockey", price: 159, cond: "New" }],
       },
       {
         id: "gloves-ccm-tacksas580",
@@ -335,10 +465,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "Tacks AS-580",
         specs: ["Entry-level protection", "Classic fit", "Wicking liner"],
         tierFit: ["Beginner", "House League"],
-        stores: [
-          { name: "Hockey Monkey", price: 69, cond: "New" },
-          { name: "SidelineSwap", price: 48, cond: "Used · Good" },
-        ],
+        stores: [{ name: "Hockey Monkey", price: 69, cond: "New" }],
       },
       {
         id: "gloves-bauer-suprememach",
@@ -346,16 +473,72 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "Supreme Mach",
         specs: ["Anatomical pro fit", "Segmented cuff", "Wicking liner"],
         tierFit: ["AAA"],
+        stores: [{ name: "Pure Hockey", price: 189, cond: "New" }],
+      },
+      {
+        id: "gloves-warrior-covertqrepro",
+        brand: "Warrior",
+        model: "Covert QRE Pro",
+        specs: ["Segmented cuff", "Tapered fit", "Wicking liner"],
+        tierFit: ["AA", "AAA"],
+        stores: [{ name: "Hockey Monkey", price: 169, cond: "New" }],
+      },
+      {
+        id: "gloves-sherwood-rekkerek15",
+        brand: "Sherwood",
+        model: "Rekker EK15",
+        specs: ["Entry-level protection", "Classic fit", "Wicking liner"],
+        tierFit: ["Beginner"],
+        stores: [{ name: "Hockey Monkey", price: 39, cond: "New" }],
+      },
+      {
+        id: "gloves-true-hzrdus3x",
+        brand: "True",
+        model: "HZRDUS 3X",
+        specs: ["Tapered fit", "Reinforced thumb", "Wicking liner"],
+        tierFit: ["AA", "AAA"],
+        stores: [{ name: "True", price: 165, cond: "New" }],
+      },
+      {
+        id: "gloves-warrior-covertqre20",
+        brand: "Warrior",
+        model: "Covert QRE20",
+        specs: ["Segmented cuff", "Tapered fit", "Wicking liner"],
+        tierFit: ["Travel", "AA"],
+        stores: [{ name: "Pure Hockey", price: 129, cond: "New" }],
+      },
+      {
+        id: "gloves-ccm-jetspeedft4",
+        brand: "CCM",
+        model: "JetSpeed FT4",
+        specs: ["Classic fit", "Reinforced thumb", "Wicking liner"],
+        tierFit: ["House League"],
         stores: [
-          { name: "Pure Hockey", price: 189, cond: "New" },
-          { name: "SidelineSwap", price: 132, cond: "Used · Good" },
+          { name: "Hockey Monkey", price: 89, cond: "New" },
+          { name: "Pure Hockey", price: 94, cond: "New" },
         ],
+      },
+      {
+        id: "gloves-bauer-vapor3x",
+        brand: "Bauer",
+        model: "Vapor 3X",
+        specs: ["Lightweight shell", "Tapered fit", "Wicking liner"],
+        tierFit: ["Beginner", "House League"],
+        stores: [{ name: "Hockey Monkey", price: 59, cond: "New" }],
+      },
+      {
+        id: "gloves-warrior-alphaone",
+        brand: "Warrior",
+        model: "Alpha One",
+        specs: ["Entry-level protection", "Classic fit", "Wicking liner"],
+        tierFit: ["Beginner"],
+        stores: [{ name: "Hockey Monkey", price: 49, cond: "New" }],
       },
     ],
   },
   shoulder: {
     category: "Shoulder Pads",
-    low: 62,
+    low: 45,
     avg: 138,
     high: 179,
     candidates: [
@@ -365,10 +548,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "JetSpeed FT4",
         specs: ["Entry protection", "Adjustable harness", "Breathable back"],
         tierFit: ["Beginner", "House League"],
-        stores: [
-          { name: "Hockey Monkey", price: 99, cond: "New" },
-          { name: "SidelineSwap", price: 69, cond: "Used · Good" },
-        ],
+        stores: [{ name: "Hockey Monkey", price: 99, cond: "New" }],
       },
       {
         id: "shoulder-warrior-alphalx2",
@@ -376,10 +556,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "Alpha LX2",
         specs: ["Best value", "Adjustable harness", "Breathable back"],
         tierFit: ["House League", "Travel"],
-        stores: [
-          { name: "Pure Hockey", price: 129, cond: "New" },
-          { name: "SidelineSwap", price: 90, cond: "Used · Good" },
-        ],
+        stores: [{ name: "Pure Hockey", price: 129, cond: "New" }],
       },
       {
         id: "shoulder-ccm-tacksasv",
@@ -390,7 +567,6 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         stores: [
           { name: "Pure Hockey", price: 149, cond: "New" },
           { name: "Hockey Monkey", price: 159, cond: "New" },
-          { name: "SidelineSwap", price: 99, cond: "Used · Good" },
         ],
       },
       {
@@ -399,10 +575,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "Vapor 3X Pro",
         specs: ["Slim, mobile fit", "Molded PE caps", "Breathable back"],
         tierFit: ["AA", "AAA"],
-        stores: [
-          { name: "Hockey Monkey", price: 159, cond: "New" },
-          { name: "SidelineSwap", price: 111, cond: "Used · Good" },
-        ],
+        stores: [{ name: "Hockey Monkey", price: 159, cond: "New" }],
       },
       {
         id: "shoulder-true-catalyst9",
@@ -410,10 +583,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "Catalyst 9",
         specs: ["Entry protection", "Lightweight shell", "Breathable back"],
         tierFit: ["Beginner", "House League"],
-        stores: [
-          { name: "True", price: 89, cond: "New" },
-          { name: "SidelineSwap", price: 62, cond: "Used · Good" },
-        ],
+        stores: [{ name: "True", price: 89, cond: "New" }],
       },
       {
         id: "shoulder-bauer-supreme",
@@ -421,18 +591,63 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "Supreme",
         specs: ["Segmented cap system", "Low-profile fit", "Breathable back"],
         tierFit: ["AAA"],
-        stores: [
-          { name: "Pure Hockey", price: 179, cond: "New" },
-          { name: "SidelineSwap", price: 125, cond: "Used · Good" },
-        ],
+        stores: [{ name: "Pure Hockey", price: 179, cond: "New" }],
+      },
+      {
+        id: "shoulder-ccm-tacksas580",
+        brand: "CCM",
+        model: "Tacks AS-580",
+        specs: ["Budget-friendly", "Basic harness", "Breathable back"],
+        tierFit: ["Beginner"],
+        stores: [{ name: "Hockey Monkey", price: 65, cond: "New" }],
+      },
+      {
+        id: "shoulder-sherwood-rekkerek15",
+        brand: "Sherwood",
+        model: "Rekker EK15",
+        specs: ["Entry protection", "Adjustable harness", "Breathable back"],
+        tierFit: ["Beginner"],
+        stores: [{ name: "Hockey Monkey", price: 45, cond: "New" }],
+      },
+      {
+        id: "shoulder-true-catalyst7x",
+        brand: "True",
+        model: "Catalyst 7X",
+        specs: ["Lightweight shell", "Adjustable harness", "Breathable back"],
+        tierFit: ["Travel", "AA"],
+        stores: [{ name: "True", price: 119, cond: "New" }],
+      },
+      {
+        id: "shoulder-warrior-covertqre20",
+        brand: "Warrior",
+        model: "Covert QRE20",
+        specs: ["Molded PE caps", "Adjustable harness", "Breathable back"],
+        tierFit: ["AA", "AAA"],
+        stores: [{ name: "Pure Hockey", price: 145, cond: "New" }],
+      },
+      {
+        id: "shoulder-ccm-jetspeedft4pro",
+        brand: "CCM",
+        model: "JetSpeed FT4 Pro",
+        specs: ["Segmented caps", "Adjustable harness", "Breathable back"],
+        tierFit: ["House League", "Travel"],
+        stores: [{ name: "Hockey Monkey", price: 119, cond: "New" }],
+      },
+      {
+        id: "shoulder-bauer-vapor3x",
+        brand: "Bauer",
+        model: "Vapor 3X",
+        specs: ["Entry protection", "Adjustable harness", "Breathable back"],
+        tierFit: ["Beginner", "House League"],
+        stores: [{ name: "Hockey Monkey", price: 75, cond: "New" }],
       },
     ],
   },
   pants: {
     category: "Pants",
-    low: 97,
+    low: 69,
     avg: 165,
-    high: 189,
+    high: 199,
     candidates: [
       {
         id: "pants-ccm-jetspeedft4",
@@ -440,10 +655,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "JetSpeed FT4",
         specs: ["Best value", "Segmented thigh guards", "Adjustable waist"],
         tierFit: ["Beginner", "House League"],
-        stores: [
-          { name: "Pure Hockey", price: 139, cond: "New" },
-          { name: "SidelineSwap", price: 97, cond: "Used · Good" },
-        ],
+        stores: [{ name: "Pure Hockey", price: 139, cond: "New" }],
       },
       {
         id: "pants-warrior-alphalx2",
@@ -451,10 +663,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "Alpha LX2",
         specs: ["Roomier fit", "Segmented thigh guards", "Adjustable waist"],
         tierFit: ["House League", "Travel"],
-        stores: [
-          { name: "Hockey Monkey", price: 149, cond: "New" },
-          { name: "SidelineSwap", price: 104, cond: "Used · Good" },
-        ],
+        stores: [{ name: "Hockey Monkey", price: 149, cond: "New" }],
       },
       {
         id: "pants-bauer-vapor3xpro",
@@ -465,7 +674,6 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         stores: [
           { name: "Hockey Monkey", price: 169, cond: "New" },
           { name: "Pure Hockey", price: 179, cond: "New" },
-          { name: "SidelineSwap", price: 110, cond: "Used · Good" },
         ],
       },
       {
@@ -474,10 +682,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "Catalyst 9",
         specs: ["Most coverage", "Tailbone protection", "Adjustable waist"],
         tierFit: ["AA", "AAA"],
-        stores: [
-          { name: "True", price: 189, cond: "New" },
-          { name: "SidelineSwap", price: 132, cond: "Used · Good" },
-        ],
+        stores: [{ name: "True", price: 189, cond: "New" }],
       },
       {
         id: "pants-ccm-tacksasv",
@@ -485,10 +690,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "Tacks AS-V",
         specs: ["Segmented thigh guards", "Anatomical fit", "Adjustable waist"],
         tierFit: ["Travel", "AA"],
-        stores: [
-          { name: "Hockey Monkey", price: 159, cond: "New" },
-          { name: "SidelineSwap", price: 111, cond: "Used · Good" },
-        ],
+        stores: [{ name: "Hockey Monkey", price: 159, cond: "New" }],
       },
       {
         id: "pants-bauer-supreme",
@@ -496,18 +698,71 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "Supreme",
         specs: ["Pro-level coverage", "Segmented thigh guards", "Adjustable waist"],
         tierFit: ["AAA"],
-        stores: [
-          { name: "Pure Hockey", price: 199, cond: "New" },
-          { name: "SidelineSwap", price: 139, cond: "Used · Good" },
-        ],
+        stores: [{ name: "Pure Hockey", price: 199, cond: "New" }],
+      },
+      {
+        id: "pants-warrior-covertqrl3",
+        brand: "Warrior",
+        model: "Covert QRL3",
+        specs: ["Segmented thigh guards", "Tailbone protection", "Adjustable waist"],
+        tierFit: ["AA"],
+        stores: [{ name: "Hockey Monkey", price: 175, cond: "New" }],
+      },
+      {
+        id: "pants-sherwood-rekkerek15",
+        brand: "Sherwood",
+        model: "Rekker EK15",
+        specs: ["Entry-level protection", "Segmented thigh guards", "Adjustable waist"],
+        tierFit: ["Beginner"],
+        stores: [{ name: "Hockey Monkey", price: 69, cond: "New" }],
+      },
+      {
+        id: "pants-true-catalyst7x",
+        brand: "True",
+        model: "Catalyst 7X",
+        specs: ["Segmented thigh guards", "Tailbone protection", "Adjustable waist"],
+        tierFit: ["Travel", "AA"],
+        stores: [{ name: "True", price: 159, cond: "New" }],
+      },
+      {
+        id: "pants-warrior-covertqre20",
+        brand: "Warrior",
+        model: "Covert QRE20",
+        specs: ["Segmented thigh guards", "Tailbone protection", "Adjustable waist"],
+        tierFit: ["AA", "AAA"],
+        stores: [{ name: "Pure Hockey", price: 185, cond: "New" }],
+      },
+      {
+        id: "pants-ccm-jetspeedft4pro",
+        brand: "CCM",
+        model: "JetSpeed FT4 Pro",
+        specs: ["Segmented thigh guards", "Anatomical fit", "Adjustable waist"],
+        tierFit: ["House League", "Travel"],
+        stores: [{ name: "Hockey Monkey", price: 149, cond: "New" }],
+      },
+      {
+        id: "pants-bauer-vapor3x",
+        brand: "Bauer",
+        model: "Vapor 3X",
+        specs: ["Entry-level protection", "Segmented thigh guards", "Adjustable waist"],
+        tierFit: ["Beginner", "House League"],
+        stores: [{ name: "Hockey Monkey", price: 99, cond: "New" }],
+      },
+      {
+        id: "pants-ccm-tacksas580",
+        brand: "CCM",
+        model: "Tacks AS-580",
+        specs: ["Budget-friendly", "Basic thigh guards", "Adjustable waist"],
+        tierFit: ["Beginner"],
+        stores: [{ name: "Hockey Monkey", price: 89, cond: "New" }],
       },
     ],
   },
   elbow: {
     category: "Elbow Pads",
-    low: 48,
+    low: 29,
     avg: 84,
-    high: 99,
+    high: 109,
     candidates: [
       {
         id: "elbow-bauer-vapor3x",
@@ -515,10 +770,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "Vapor 3X",
         specs: ["Lightest option", "Molded cap", "Slash guard"],
         tierFit: ["Beginner", "House League"],
-        stores: [
-          { name: "Hockey Monkey", price: 69, cond: "New" },
-          { name: "SidelineSwap", price: 48, cond: "Used · Good" },
-        ],
+        stores: [{ name: "Hockey Monkey", price: 69, cond: "New" }],
       },
       {
         id: "elbow-ccm-jetspeedft4",
@@ -529,7 +781,6 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         stores: [
           { name: "Pure Hockey", price: 79, cond: "New" },
           { name: "Hockey Monkey", price: 85, cond: "New" },
-          { name: "SidelineSwap", price: 49, cond: "Used · Like New" },
         ],
       },
       {
@@ -538,10 +789,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "Alpha LX2",
         specs: ["Extra forearm coverage", "Molded cap", "Slash guard"],
         tierFit: ["Travel", "AA"],
-        stores: [
-          { name: "Pure Hockey", price: 89, cond: "New" },
-          { name: "SidelineSwap", price: 62, cond: "Used · Good" },
-        ],
+        stores: [{ name: "Pure Hockey", price: 89, cond: "New" }],
       },
       {
         id: "elbow-true-catalyst9",
@@ -549,10 +797,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "Catalyst 9",
         specs: ["Premium fit", "Molded cap", "Slash guard"],
         tierFit: ["AA", "AAA"],
-        stores: [
-          { name: "True", price: 99, cond: "New" },
-          { name: "SidelineSwap", price: 69, cond: "Used · Good" },
-        ],
+        stores: [{ name: "True", price: 99, cond: "New" }],
       },
       {
         id: "elbow-ccm-tacksasv",
@@ -560,10 +805,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "Tacks AS-V",
         specs: ["Molded cap", "Extended forearm guard", "Slash guard"],
         tierFit: ["Travel", "AA"],
-        stores: [
-          { name: "Pure Hockey", price: 79, cond: "New" },
-          { name: "SidelineSwap", price: 55, cond: "Used · Good" },
-        ],
+        stores: [{ name: "Pure Hockey", price: 79, cond: "New" }],
       },
       {
         id: "elbow-bauer-supreme",
@@ -571,18 +813,63 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "Supreme",
         specs: ["Low-profile cap", "Segmented protection", "Slash guard"],
         tierFit: ["AAA"],
-        stores: [
-          { name: "Hockey Monkey", price: 109, cond: "New" },
-          { name: "SidelineSwap", price: 76, cond: "Used · Good" },
-        ],
+        stores: [{ name: "Hockey Monkey", price: 109, cond: "New" }],
+      },
+      {
+        id: "elbow-true-catalyst9x",
+        brand: "True",
+        model: "Catalyst 9X",
+        specs: ["Premium fit", "Extended forearm guard", "Slash guard"],
+        tierFit: ["AAA"],
+        stores: [{ name: "True", price: 105, cond: "New" }],
+      },
+      {
+        id: "elbow-sherwood-rekkerek15",
+        brand: "Sherwood",
+        model: "Rekker EK15",
+        specs: ["Entry protection", "Molded cap", "Slash guard"],
+        tierFit: ["Beginner"],
+        stores: [{ name: "Hockey Monkey", price: 29, cond: "New" }],
+      },
+      {
+        id: "elbow-true-hzrdus3x",
+        brand: "True",
+        model: "HZRDUS 3X",
+        specs: ["Premium fit", "Molded cap", "Slash guard"],
+        tierFit: ["AA", "AAA"],
+        stores: [{ name: "True", price: 95, cond: "New" }],
+      },
+      {
+        id: "elbow-warrior-covertqre20",
+        brand: "Warrior",
+        model: "Covert QRE20",
+        specs: ["Segmented protection", "Molded cap", "Slash guard"],
+        tierFit: ["Travel", "AA"],
+        stores: [{ name: "Pure Hockey", price: 79, cond: "New" }],
+      },
+      {
+        id: "elbow-ccm-jetspeedft4pro",
+        brand: "CCM",
+        model: "JetSpeed FT4 Pro",
+        specs: ["Molded cap", "Three-strap lock", "Slash guard"],
+        tierFit: ["House League", "Travel"],
+        stores: [{ name: "Hockey Monkey", price: 89, cond: "New" }],
+      },
+      {
+        id: "elbow-bauer-vapor3xpro",
+        brand: "Bauer",
+        model: "Vapor 3X Pro",
+        specs: ["Low-profile cap", "Molded cap", "Slash guard"],
+        tierFit: ["AAA"],
+        stores: [{ name: "Hockey Monkey", price: 99, cond: "New" }],
       },
     ],
   },
   shin: {
     category: "Shin Guards",
-    low: 76,
+    low: 49,
     avg: 126,
-    high: 139,
+    high: 145,
     candidates: [
       {
         id: "shin-ccm-jetspeedft4",
@@ -590,10 +877,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "JetSpeed FT4",
         specs: ["Best value", "Molded knee cap", "Secure straps"],
         tierFit: ["Beginner", "House League"],
-        stores: [
-          { name: "Hockey Monkey", price: 109, cond: "New" },
-          { name: "SidelineSwap", price: 76, cond: "Used · Good" },
-        ],
+        stores: [{ name: "Hockey Monkey", price: 109, cond: "New" }],
       },
       {
         id: "shin-warrior-alphalx2",
@@ -601,10 +885,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "Alpha LX2",
         specs: ["Slim profile", "Molded knee cap", "Secure straps"],
         tierFit: ["House League", "Travel"],
-        stores: [
-          { name: "Pure Hockey", price: 119, cond: "New" },
-          { name: "SidelineSwap", price: 83, cond: "Used · Good" },
-        ],
+        stores: [{ name: "Pure Hockey", price: 119, cond: "New" }],
       },
       {
         id: "shin-bauer-supremem5pro",
@@ -615,7 +896,6 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         stores: [
           { name: "Pure Hockey", price: 129, cond: "New" },
           { name: "Hockey Monkey", price: 135, cond: "New" },
-          { name: "SidelineSwap", price: 82, cond: "Used · Good" },
         ],
       },
       {
@@ -624,10 +904,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "Catalyst 9",
         specs: ["Most coverage", "Molded knee cap", "Secure straps"],
         tierFit: ["AA", "AAA"],
-        stores: [
-          { name: "True", price: 139, cond: "New" },
-          { name: "SidelineSwap", price: 97, cond: "Used · Good" },
-        ],
+        stores: [{ name: "True", price: 139, cond: "New" }],
       },
       {
         id: "shin-ccm-tacksasv",
@@ -635,10 +912,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "Tacks AS-V",
         specs: ["Molded knee cap", "Anatomical calf wrap", "Secure straps"],
         tierFit: ["Travel", "AA"],
-        stores: [
-          { name: "Pure Hockey", price: 125, cond: "New" },
-          { name: "SidelineSwap", price: 87, cond: "Used · Good" },
-        ],
+        stores: [{ name: "Pure Hockey", price: 125, cond: "New" }],
       },
       {
         id: "shin-bauer-vapor3xpro",
@@ -646,13 +920,66 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
         model: "Vapor 3X Pro",
         specs: ["Low-profile knee cap", "Lightweight shell", "Secure straps"],
         tierFit: ["AAA"],
-        stores: [
-          { name: "Hockey Monkey", price: 145, cond: "New" },
-          { name: "SidelineSwap", price: 101, cond: "Used · Good" },
-        ],
+        stores: [{ name: "Hockey Monkey", price: 145, cond: "New" }],
+      },
+      {
+        id: "shin-warrior-covertqrl3",
+        brand: "Warrior",
+        model: "Covert QRL3",
+        specs: ["Molded knee cap", "Anatomical calf wrap", "Secure straps"],
+        tierFit: ["AA"],
+        stores: [{ name: "Hockey Monkey", price: 130, cond: "New" }],
+      },
+      {
+        id: "shin-sherwood-rekkerek15",
+        brand: "Sherwood",
+        model: "Rekker EK15",
+        specs: ["Entry-level protection", "Molded knee cap", "Secure straps"],
+        tierFit: ["Beginner"],
+        stores: [{ name: "Hockey Monkey", price: 49, cond: "New" }],
+      },
+      {
+        id: "shin-true-catalyst7x",
+        brand: "True",
+        model: "Catalyst 7X",
+        specs: ["Molded knee cap", "Anatomical calf wrap", "Secure straps"],
+        tierFit: ["Travel", "AA"],
+        stores: [{ name: "True", price: 109, cond: "New" }],
+      },
+      {
+        id: "shin-warrior-covertqre20",
+        brand: "Warrior",
+        model: "Covert QRE20",
+        specs: ["Molded knee cap", "Full shin coverage", "Secure straps"],
+        tierFit: ["AA", "AAA"],
+        stores: [{ name: "Pure Hockey", price: 119, cond: "New" }],
+      },
+      {
+        id: "shin-ccm-jetspeedft4pro",
+        brand: "CCM",
+        model: "JetSpeed FT4 Pro",
+        specs: ["Molded knee cap", "Secure straps", "Lightweight shell"],
+        tierFit: ["House League", "Travel"],
+        stores: [{ name: "Hockey Monkey", price: 99, cond: "New" }],
+      },
+      {
+        id: "shin-bauer-vapor3x",
+        brand: "Bauer",
+        model: "Vapor 3X",
+        specs: ["Entry-level protection", "Molded knee cap", "Secure straps"],
+        tierFit: ["Beginner", "House League"],
+        stores: [{ name: "Hockey Monkey", price: 79, cond: "New" }],
+      },
+      {
+        id: "shin-ccm-tacksas580",
+        brand: "CCM",
+        model: "Tacks AS-580",
+        specs: ["Budget-friendly", "Basic knee cap", "Secure straps"],
+        tierFit: ["Beginner"],
+        stores: [{ name: "Hockey Monkey", price: 69, cond: "New" }],
       },
     ],
   },
 };
 
-export const searchSources = ["Pure Hockey", "Hockey Monkey", "Bauer.com", "CCM.com", "SidelineSwap"];
+export const searchSources = ["Pure Hockey", "Hockey Monkey", "Bauer.com", "CCM.com"];

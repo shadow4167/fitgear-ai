@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import styles from "./AppShell.module.css";
-import { catalog, equipment } from "@/lib/gear-data";
+import { catalog, equipment, searchSources } from "@/lib/gear-data";
 import { deterministicChatReply, deterministicRecommendation } from "@/lib/recommend";
 import { loadWallet, saveWallet } from "@/lib/game-storage";
 import { GAME_TEAMS } from "@/lib/game-teams";
@@ -100,11 +100,11 @@ export default function FitGearApp() {
     searchTimer.current = setInterval(() => {
       setSearchStep((prev) => {
         const n = prev + 1;
-        if (n > 5) {
+        if (n > searchSources.length) {
           if (searchTimer.current) clearInterval(searchTimer.current);
           timerDone = true;
           maybeFinish();
-          return 5;
+          return searchSources.length;
         }
         return n;
       });

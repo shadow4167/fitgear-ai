@@ -376,6 +376,38 @@ export function drawSkater(ctx: CanvasRenderingContext2D, x: number, y: number, 
   ctx.fill();
 }
 
+export function drawPassArrow(ctx: CanvasRenderingContext2D, fromX: number, fromY: number, toX: number, toY: number) {
+  const dx = toX - fromX;
+  const dy = toY - fromY;
+  const dist = Math.hypot(dx, dy);
+  if (dist < 1) return;
+  const ux = dx / dist;
+  const uy = dy / dist;
+  const headLen = 10;
+  const tipX = toX - ux * 22;
+  const tipY = toY - uy * 22;
+
+  ctx.save();
+  ctx.strokeStyle = "rgba(31,95,212,.85)";
+  ctx.fillStyle = "rgba(31,95,212,.85)";
+  ctx.lineWidth = 2.5;
+  ctx.lineCap = "round";
+  ctx.setLineDash([6, 5]);
+  ctx.beginPath();
+  ctx.moveTo(fromX, fromY);
+  ctx.lineTo(tipX - ux * headLen, tipY - uy * headLen);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  ctx.beginPath();
+  ctx.moveTo(tipX, tipY);
+  ctx.lineTo(tipX - ux * headLen - uy * 5, tipY - uy * headLen + ux * 5);
+  ctx.lineTo(tipX - ux * headLen + uy * 5, tipY - uy * headLen - ux * 5);
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
+}
+
 export function drawHelmetDrop(
   ctx: CanvasRenderingContext2D,
   x: number,
