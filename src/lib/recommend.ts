@@ -118,6 +118,33 @@ export function extractStatedBudget(message: string): number | undefined {
   return Number.isFinite(value) && value > 0 ? value : undefined;
 }
 
+const SKILL_TIPS: [RegExp, string][] = [
+  [
+    /defend|defense(?!man)|backcheck|gap control/i,
+    "For better defending: keep a tight gap (about a stick-length away), stay between your check and the net, angle opponents toward the boards instead of the middle, and use your stick to poke-check rather than diving in.",
+  ],
+  [
+    /shoot|shot|snipe|wrist shot|slap shot/i,
+    "For a better shot: keep the puck slightly forward in your stance, shift your weight from back foot to front foot as you release, and follow through toward your target.",
+  ],
+  [
+    /skat(e|ing)|stride|edge work/i,
+    "For skating: focus on full leg extension every stride, keep your knees bent low, and practice crossovers to build the edge control you need for quick turns.",
+  ],
+  [
+    /pass(ing)?|breakout/i,
+    "For passing: lead your teammate into open ice instead of right at them, keep the pass flat and firm, and look up before you release.",
+  ],
+  [
+    /stickhandl|puck control|dangle/i,
+    "For stickhandling: keep the puck close with soft hands, practice with your head up, and work on quick lateral moves to protect it from checks.",
+  ],
+  [
+    /goal(ie|tend)|\bsave\b/i,
+    "For goaltending: stay square to the puck, keep your glove up and ready, and track the puck all the way into your body or pads instead of reaching.",
+  ],
+];
+
 function detectEquipId(lc: string): EquipId | null {
   for (const e of equipment) {
     if (lc.includes(e.name.toLowerCase()) || lc.includes(e.id)) return e.id;
@@ -155,9 +182,13 @@ export function deterministicChatReply(
         budget: statedBudget,
       };
     }
+    const tip = SKILL_TIPS.find(([re]) => re.test(lc));
+    if (tip) {
+      return { reply: `${tip[1]} Want gear picks to go with that? Just tell me the piece of gear, your level, and your budget.` };
+    }
     return {
       reply:
-        'Got it. Tell me the piece of gear (helmet, skates, stick…), your level, and your budget and I\'ll find the best-fit model and where to buy it. Or tap "Find my gear" for the guided version.',
+        'I can help most with picking gear (helmet, skates, stick…), or with general hockey questions and training tips. Tell me what you need, your level, and your budget, and I\'ll find the best-fit model and where to buy it. Or tap "Find my gear" for the guided version.',
     };
   }
 
