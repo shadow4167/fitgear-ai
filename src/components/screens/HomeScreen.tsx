@@ -183,20 +183,16 @@ export default function HomeScreen({ onFindGear, onAskGuide, onPlay, quickPicks 
       >
         <div
           style={{
+            position: "relative",
             width: 38,
             height: 38,
             borderRadius: "50%",
             background: "#E6F1FB",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
             flexShrink: 0,
+            overflow: "hidden",
           }}
         >
-          <svg width="19" height="19" viewBox="0 0 20 20" fill="none">
-            <circle cx="10" cy="10" r="7" stroke="var(--fg-brand)" strokeWidth="1.8" />
-            <path d="M7 10h6M10 7v6" stroke="var(--fg-brand)" strokeWidth="1.8" strokeLinecap="round" />
-          </svg>
+          <Image src="/equipment/hockeypuck.png" alt="Shootout" fill sizes="38px" style={{ objectFit: "contain", padding: 6 }} />
         </div>
         <div style={{ flex: 1 }}>
           <div style={{ fontFamily: "var(--font-archivo)", fontWeight: 700, fontSize: 16 }}>Play Shootout</div>
