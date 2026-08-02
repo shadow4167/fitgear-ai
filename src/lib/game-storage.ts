@@ -1,6 +1,7 @@
 import type { GameWallet } from "@/types/fitgear";
 
 const WALLET_KEY = "fitgear:game-wallet";
+const TUTORIAL_KEY = "fitgear:game-tutorial-seen";
 const STARTER_STICK_ID = "stick-sherwood-rekkerelementone";
 
 export const DEFAULT_WALLET: GameWallet = {
@@ -25,6 +26,24 @@ export function saveWallet(wallet: GameWallet): void {
   if (typeof window === "undefined") return;
   try {
     window.localStorage.setItem(WALLET_KEY, JSON.stringify(wallet));
+  } catch {
+    // storage unavailable (quota, private browsing) — silently skip persistence
+  }
+}
+
+export function loadTutorialSeen(): boolean {
+  if (typeof window === "undefined") return true;
+  try {
+    return window.localStorage.getItem(TUTORIAL_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+export function saveTutorialSeen(): void {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(TUTORIAL_KEY, "1");
   } catch {
     // storage unavailable (quota, private browsing) — silently skip persistence
   }

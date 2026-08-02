@@ -1,5 +1,5 @@
+import Image from "next/image";
 import type { EquipId } from "@/types/fitgear";
-import { EquipIcon } from "./shared";
 
 interface QuickPick {
   id: EquipId;
@@ -236,18 +236,16 @@ export default function HomeScreen({ onFindGear, onAskGuide, onPlay, quickPicks 
           >
             <div
               style={{
+                position: "relative",
                 width: 34,
                 height: 34,
                 borderRadius: 9,
-                background:
-                  "repeating-linear-gradient(135deg,#E6F1FB,#E6F1FB 5px,#DCEBF8 5px,#DCEBF8 10px)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
+                background: "#EAF3FB",
                 flexShrink: 0,
+                overflow: "hidden",
               }}
             >
-              <EquipIcon id={q.id} size={18} />
+              <Image src={`/equipment/${q.id}.png`} alt={q.name} fill sizes="34px" style={{ objectFit: "contain", padding: 4 }} />
             </div>
             <div>
               <div style={{ fontWeight: 700, fontSize: 14 }}>{q.name}</div>

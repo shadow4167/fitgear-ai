@@ -1,3 +1,5 @@
+import Image from "next/image";
+import { equipment } from "@/lib/gear-data";
 import type { ResultEntry } from "@/types/fitgear";
 import { BackButton } from "./shared";
 
@@ -12,6 +14,7 @@ export default function DetailScreen({ res, recapLevel, onBack, onAskGuide }: Pr
   const { top, category } = res;
   const { stores, specs } = top;
   const bestStore = stores.reduce((a, b) => (b.price < a.price ? b : a), stores[0]);
+  const equipId = equipment.find((e) => e.name === category)?.id;
 
   return (
     <div style={{ minHeight: "100%", padding: "58px 18px 40px", boxSizing: "border-box", animation: "fgIn .3s ease" }}>
@@ -22,18 +25,15 @@ export default function DetailScreen({ res, recapLevel, onBack, onAskGuide }: Pr
 
       <div
         style={{
+          position: "relative",
           height: 180,
           borderRadius: 20,
-          background: "repeating-linear-gradient(135deg,#EAF3FB,#EAF3FB 8px,#DEEBF7 8px,#DEEBF7 16px)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          background: "#EAF3FB",
+          overflow: "hidden",
           marginBottom: 18,
         }}
       >
-        <span style={{ fontFamily: "ui-monospace,monospace", fontSize: 12, letterSpacing: "1px", color: "#9DB4CA" }}>
-          [ {category} product shot ]
-        </span>
+        {equipId && <Image src={`/equipment/${equipId}.png`} alt={category} fill sizes="480px" style={{ objectFit: "contain", padding: 28 }} />}
       </div>
 
       <div style={{ fontSize: 13, fontWeight: 700, color: "var(--fg-brand)" }}>{top.brand}</div>

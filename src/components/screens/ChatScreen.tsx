@@ -1,5 +1,6 @@
 import type { KeyboardEvent } from "react";
-import type { ChatMessage } from "@/types/fitgear";
+import Image from "next/image";
+import type { ChatMessage, ChatRec } from "@/types/fitgear";
 import { BackButton } from "./shared";
 
 const SUGGESTIONS = ["What helmet for AAA?", "Cheapest skates under $500", "Best value stick"];
@@ -11,10 +12,11 @@ interface Props {
   onDraftChange: (v: string) => void;
   onSend: () => void;
   onSuggestion: (text: string) => void;
+  onSelectRec: (rec: ChatRec) => void;
   onBack: () => void;
 }
 
-export default function ChatScreen({ messages, typing, draft, onDraftChange, onSend, onSuggestion, onBack }: Props) {
+export default function ChatScreen({ messages, typing, draft, onDraftChange, onSend, onSuggestion, onSelectRec, onBack }: Props) {
   const showSuggestions = messages.length <= 1 && !typing;
 
   function onDraftKey(e: KeyboardEvent<HTMLInputElement>) {
@@ -81,16 +83,27 @@ export default function ChatScreen({ messages, typing, draft, onDraftChange, onS
               >
                 {m.text}
                 {m.rec && (
-                  <div style={{ marginTop: 11, background: "#F4F8FC", borderRadius: 13, padding: 12, display: "flex", alignItems: "center", gap: 12 }}>
-                    <div
-                      style={{
-                        width: 46,
-                        height: 46,
-                        borderRadius: 10,
-                        flexShrink: 0,
-                        background: "repeating-linear-gradient(135deg,#E6F1FB,#E6F1FB 6px,#DAE9F7 6px,#DAE9F7 12px)",
-                      }}
-                    />
+                  <button
+                    onClick={() => onSelectRec(m.rec!)}
+                    style={{
+                      marginTop: 11,
+                      border: "none",
+                      cursor: "pointer",
+                      textAlign: "left",
+                      width: "100%",
+                      background: "#F4F8FC",
+                      borderRadius: 13,
+                      padding: 12,
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 12,
+                      font: "inherit",
+                      color: "inherit",
+                    }}
+                  >
+                    <div style={{ position: "relative", width: 46, height: 46, borderRadius: 10, flexShrink: 0, background: "#EAF3FB", overflow: "hidden" }}>
+                      <Image src={`/equipment/${m.rec.id}.png`} alt={m.rec.model} fill sizes="46px" style={{ objectFit: "contain", padding: 5 }} />
+                    </div>
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ fontSize: 11, fontWeight: 700, color: "var(--fg-brand)" }}>
                         {m.rec.brand} · {m.rec.category}
@@ -100,7 +113,10 @@ export default function ChatScreen({ messages, typing, draft, onDraftChange, onS
                         ${m.rec.price} at {m.rec.store}
                       </div>
                     </div>
-                  </div>
+                    <svg width="16" height="16" viewBox="0 0 18 18" fill="none" style={{ flexShrink: 0, opacity: 0.5 }}>
+                      <path d="M3 9h11M9 4l5 5-5 5" stroke="#13263F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </button>
                 )}
               </div>
             </div>
@@ -164,13 +180,15 @@ export default function ChatScreen({ messages, typing, draft, onDraftChange, onS
           />
           <button
             onClick={onSend}
+            disabled={typing || !draft.trim()}
             style={{
               border: "none",
-              cursor: "pointer",
+              cursor: typing || !draft.trim() ? "default" : "pointer",
               width: 40,
               height: 40,
               borderRadius: "50%",
               background: "var(--fg-brand)",
+              opacity: typing || !draft.trim() ? 0.5 : 1,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",

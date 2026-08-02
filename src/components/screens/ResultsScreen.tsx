@@ -1,3 +1,5 @@
+import Image from "next/image";
+import { equipment } from "@/lib/gear-data";
 import type { ResultEntry } from "@/types/fitgear";
 
 interface Props {
@@ -30,6 +32,7 @@ export default function ResultsScreen({
   onAskGuide,
 }: Props) {
   const { top, alts, low, high, avg } = res;
+  const equipId = equipment.find((e) => e.name === recapCat)?.id;
   const avgLeft = pct(avg, low, high).toFixed(1) + "%";
   const topLeft = pct(top.price, low, high).toFixed(1) + "%";
   const inBudget = top.price <= budget;
@@ -100,18 +103,15 @@ export default function ResultsScreen({
 
         <div
           style={{
+            position: "relative",
             height: 140,
             borderRadius: 16,
-            background: "repeating-linear-gradient(135deg,#EAF3FB,#EAF3FB 7px,#DEEBF7 7px,#DEEBF7 14px)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
+            background: "#EAF3FB",
+            overflow: "hidden",
             marginBottom: 16,
           }}
         >
-          <span style={{ fontFamily: "ui-monospace,monospace", fontSize: 11, letterSpacing: "1px", color: "#9DB4CA" }}>
-            [ {recapCat} ]
-          </span>
+          {equipId && <Image src={`/equipment/${equipId}.png`} alt={recapCat} fill sizes="440px" style={{ objectFit: "contain", padding: 22 }} />}
         </div>
 
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12 }}>
@@ -235,15 +235,9 @@ export default function ResultsScreen({
             key={a.brand + a.model}
             style={{ background: "#fff", borderRadius: 16, padding: 13, display: "flex", alignItems: "center", gap: 13, boxShadow: "0 3px 12px rgba(19,38,63,.05)" }}
           >
-            <div
-              style={{
-                width: 52,
-                height: 52,
-                borderRadius: 11,
-                flexShrink: 0,
-                background: "repeating-linear-gradient(135deg,#EEF4FA,#EEF4FA 6px,#E1ECF6 6px,#E1ECF6 12px)",
-              }}
-            />
+            <div style={{ position: "relative", width: 52, height: 52, borderRadius: 11, flexShrink: 0, background: "#EEF4FA", overflow: "hidden" }}>
+              {equipId && <Image src={`/equipment/${equipId}.png`} alt={a.model} fill sizes="52px" style={{ objectFit: "contain", padding: 6 }} />}
+            </div>
             <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{ fontSize: 11.5, fontWeight: 700, color: "var(--fg-brand)" }}>{a.brand}</div>
               <div style={{ fontFamily: "var(--font-archivo)", fontWeight: 700, fontSize: 15, letterSpacing: "-.2px" }}>{a.model}</div>

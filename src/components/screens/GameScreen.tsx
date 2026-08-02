@@ -7,6 +7,7 @@ import { cheapestStore } from "@/lib/recommend";
 import { GAME_TEAMS, goalieFor, shooterFor } from "@/lib/game-teams";
 import { currencyForGoal, ovrMultiplier } from "@/lib/game-economy";
 import { generateOnIceSkaters, isLaneBlocked, resolvePass } from "@/lib/game-play";
+import { loadTutorialSeen, saveTutorialSeen } from "@/lib/game-storage";
 import {
   GOALIE_HALF,
   H,
@@ -112,6 +113,61 @@ function runCelebration(
   };
 }
 
+const TUTORIAL_STEPS = [
+  { emoji: "🥅", text: "Tap anywhere in the net to shoot the puck there." },
+  { emoji: "🙋", text: "Arrows on your teammates mean a defender is blocking your shot — tap a teammate to pass to them instead." },
+  { emoji: "⏱️", text: "The blue bar is your shot clock. Shoot or pass before it runs out or the defense checks you and you lose the puck." },
+  { emoji: "🪙", text: "Score goals to earn coins, then spend them in the Shop for faster sticks." },
+];
+
+function TutorialOverlay({ onClose }: { onClose: () => void }) {
+  return (
+    <div
+      style={{
+        position: "absolute",
+        inset: 0,
+        zIndex: 30,
+        background: "rgba(19,38,63,.55)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: 24,
+      }}
+    >
+      <div style={{ background: "#fff", borderRadius: 22, padding: 22, maxWidth: 340, boxShadow: "0 20px 50px rgba(19,38,63,.3)" }}>
+        <div style={{ fontFamily: "var(--font-archivo)", fontWeight: 800, fontSize: 19, marginBottom: 14 }}>
+          How to play Shootout
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 13, marginBottom: 20 }}>
+          {TUTORIAL_STEPS.map((step) => (
+            <div key={step.text} style={{ display: "flex", gap: 11, alignItems: "flex-start" }}>
+              <span style={{ fontSize: 20, lineHeight: 1.3 }}>{step.emoji}</span>
+              <span style={{ fontSize: 14, lineHeight: 1.45, color: "#3F5066" }}>{step.text}</span>
+            </div>
+          ))}
+        </div>
+        <button
+          onClick={onClose}
+          style={{
+            border: "none",
+            cursor: "pointer",
+            width: "100%",
+            background: "var(--fg-brand)",
+            color: "#fff",
+            borderRadius: 14,
+            padding: 14,
+            fontFamily: "var(--font-archivo)",
+            fontWeight: 700,
+            fontSize: 15,
+          }}
+        >
+          Let&rsquo;s play!
+        </button>
+      </div>
+    </div>
+  );
+}
+
 interface Props {
   wallet: GameWallet;
   setWallet: Dispatch<SetStateAction<GameWallet>>;
@@ -162,6 +218,7 @@ export default function GameScreen({
 
   const [result, setResult] = useState<"goal" | "save" | null>(null);
   const [busy, setBusy] = useState(false);
+  const [showTutorial, setShowTutorial] = useState(() => !loadTutorialSeen());
 
   const [shotOriginX, setShotOriginX] = useState(PUCK_START.x);
   const [onIce, setOnIce] = useState<OnIceSkater[]>(() => generateOnIceSkaters(PUCK_START.x, ON_ICE_Y));
@@ -177,6 +234,12 @@ export default function GameScreen({
   const cancelAnimRef = useRef<() => void>(() => {});
   const passTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const checkTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const busyRef = useRef(false);
+
+  function setBusyBoth(v: boolean) {
+    busyRef.current = v;
+    setBusy(v);
+  }
 
   useEffect(() => {
     return () => {
@@ -198,7 +261,7 @@ export default function GameScreen({
     if (checkTimeoutRef.current) clearTimeout(checkTimeoutRef.current);
     checkTimeoutRef.current = setTimeout(() => {
       setCountdownActive(false);
-      setBusy(true);
+      setBusyBoth(true);
       setHit(true);
       draw();
       passTimeoutRef.current = setTimeout(() => {
@@ -214,9 +277,21 @@ export default function GameScreen({
   }
 
   useEffect(() => {
-    armCheckTimer();
+    if (!showTutorial) armCheckTimer();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  function openTutorial() {
+    clearCountdown();
+    setShowTutorial(true);
+  }
+
+  function closeTutorial() {
+    saveTutorialSeen();
+    setShowTutorial(false);
+    setRoundKey((k) => k + 1);
+    startCountdown();
+  }
 
   function draw() {
     const ctx = canvasRef.current?.getContext("2d");
@@ -258,12 +333,13 @@ export default function GameScreen({
       );
     }
 
+    const arrowsVisible = laneBlocked && !passedThisRound && !busyRef.current;
     if (!cel) {
       onIce.forEach((s) => {
         const jersey = s.role === "defender" ? opponentTeam.jerseyColor : userTeam.jerseyColor;
-        drawSkater(ctx, s.x, s.y, jersey, canPass && s.role === "teammate");
+        drawSkater(ctx, s.x, s.y, jersey, arrowsVisible && s.role === "teammate");
       });
-      if (canPass) {
+      if (arrowsVisible) {
         onIce
           .filter((s) => s.role === "teammate")
           .forEach((s) => drawPassArrow(ctx, shotOriginX, PUCK_START.y, s.x, s.y));
@@ -302,14 +378,14 @@ export default function GameScreen({
     setRoundKey((k) => k + 1);
     puckRef.current = { ...PUCK_START };
     trailRef.current = [];
-    setBusy(false);
+    setBusyBoth(false);
     draw();
     startCountdown();
   }
 
   function completeShot(targetX: number, targetY: number) {
     clearCountdown();
-    setBusy(true);
+    setBusyBoth(true);
     setResult(null);
     trailRef.current = [];
     const finalSpeed = speed * ovrMultiplier(shooter.ovr);
@@ -368,15 +444,33 @@ export default function GameScreen({
     const defender = onIce.find((s) => s.role === "defender");
     const outcome = resolvePass(target, defender);
     if (outcome === "success") {
-      setShotOriginX(target.x);
-      setPassedThisRound(true);
-      setPassResult("success");
-      passTimeoutRef.current = setTimeout(() => setPassResult(null), 700);
+      setBusyBoth(true);
       armCheckTimer();
       setRoundKey((k) => k + 1);
-      draw();
+      const fromX = shotOriginX;
+      trailRef.current = [];
+      cancelAnimRef.current = animate(
+        { x: fromX, y: PUCK_START.y },
+        { x: target.x, y: target.y },
+        260,
+        (p) => {
+          puckRef.current = p;
+          trailRef.current = [...trailRef.current, p].slice(-6);
+          draw();
+        },
+        () => {
+          trailRef.current = [];
+          puckRef.current = { x: target.x, y: PUCK_START.y };
+          setShotOriginX(target.x);
+          setPassedThisRound(true);
+          setBusyBoth(false);
+          setPassResult("success");
+          passTimeoutRef.current = setTimeout(() => setPassResult(null), 700);
+          draw();
+        },
+      );
     } else {
-      setBusy(true);
+      setBusyBoth(true);
       setPassResult("intercepted");
       passTimeoutRef.current = setTimeout(() => {
         setPassResult(null);
@@ -386,7 +480,7 @@ export default function GameScreen({
   }
 
   function handleCanvasClick(e: React.MouseEvent<HTMLCanvasElement>) {
-    if (busy) return;
+    if (busy || showTutorial) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const rect = canvas.getBoundingClientRect();
@@ -419,13 +513,33 @@ export default function GameScreen({
             : null;
 
   return (
-    <div style={{ minHeight: "100%", padding: "58px 20px 40px", boxSizing: "border-box", animation: "fgIn .3s ease" }}>
+    <div style={{ position: "relative", minHeight: "100%", padding: "58px 20px 40px", boxSizing: "border-box", animation: "fgIn .3s ease" }}>
+      {showTutorial && <TutorialOverlay onClose={closeTutorial} />}
       <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 18 }}>
         <BackButton onClick={onBack} />
         <div style={{ flex: 1 }}>
           <div style={{ fontFamily: "var(--font-archivo)", fontWeight: 700, fontSize: 20 }}>Shootout</div>
-          <div style={{ fontSize: 12, color: "#92A0B0" }}>Tap the net to shoot, or tap a teammate to pass — don&rsquo;t wait too long</div>
+          <div style={{ fontSize: 12, color: "#92A0B0" }}>Tap the net to shoot the puck. See arrows on a teammate? Tap them to pass instead.</div>
         </div>
+        <button
+          onClick={openTutorial}
+          aria-label="How to play"
+          style={{
+            border: "1px solid rgba(19,38,63,.12)",
+            cursor: "pointer",
+            width: 36,
+            height: 36,
+            borderRadius: "50%",
+            background: "#fff",
+            color: "var(--fg-brand)",
+            fontFamily: "var(--font-archivo)",
+            fontWeight: 800,
+            fontSize: 15,
+            flexShrink: 0,
+          }}
+        >
+          ?
+        </button>
         <button
           onClick={onOpenShop}
           style={{
