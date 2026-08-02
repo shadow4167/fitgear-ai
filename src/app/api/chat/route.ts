@@ -33,14 +33,21 @@ interface ChatModelOutput {
 
 // Backstop for when the model names a real catalog product in its reply text
 // but forgets to set equipId/candidateId — resolve the product from the text itself.
-function findCandidateByText(reply: string): { equipId: EquipId; candidate: GearCandidate } | undefined {
+// Some model names (e.g. "Sherwood Rekker EK15") are reused verbatim across
+// categories, so plain substring matching can pick the wrong category — bias
+// toward whichever category's name is also mentioned in the conversation.
+function findCandidateByText(reply: string, message: string): { equipId: EquipId; candidate: GearCandidate } | undefined {
   const lc = reply.toLowerCase();
-  let best: { equipId: EquipId; candidate: GearCandidate; len: number } | undefined;
+  const hint = `${message} ${reply}`.toLowerCase();
+  let best: { equipId: EquipId; candidate: GearCandidate; score: number } | undefined;
   for (const e of equipment) {
+    const categoryMentioned = hint.includes(e.name.toLowerCase()) || hint.includes(e.id);
     for (const candidate of catalog[e.id].candidates) {
       const name = `${candidate.brand} ${candidate.model}`.toLowerCase();
-      if (lc.includes(name) && (!best || name.length > best.len)) {
-        best = { equipId: e.id, candidate, len: name.length };
+      if (!lc.includes(name)) continue;
+      const score = name.length + (categoryMentioned ? 1000 : 0);
+      if (!best || score > best.score) {
+        best = { equipId: e.id, candidate, score };
       }
     }
   }
@@ -131,7 +138,7 @@ ${catalogListing()}`,
     }
 
     if (!rec) {
-      const found = findCandidateByText(parsed.reply);
+      const found = findCandidateByText(parsed.reply, message);
       if (found) {
         const best = cheapestStore(found.candidate);
         rec = {

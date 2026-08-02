@@ -63,6 +63,7 @@ export function deterministicRecommendation(
   const top = underBudget.length
     ? underBudget.reduce((a, b) => (price(b) > price(a) ? b : a))
     : fitting.reduce((a, b) => (price(b) < price(a) ? b : a));
+  const withinBudget = price(top) <= budget;
 
   const alts = fitting
     .filter((c) => c.id !== top.id)
@@ -70,44 +71,115 @@ export function deterministicRecommendation(
     .slice(0, 3)
     .map((c) => toAltPick(c, `${c.tierFit.join("–")} fit`));
 
+  const why = withinBudget
+    ? `A solid ${tier.toLowerCase()} fit that lines up with your budget.`
+    : `The most affordable ${tier.toLowerCase()}-level option we carry, though it still runs above your $${budget} budget.`;
+
   return {
     category: entry.category,
     low: entry.low,
     avg: entry.avg,
     high: entry.high,
-    top: toTopPick(top, tier, position, `A solid ${tier.toLowerCase()} fit that lines up with your budget.`),
+    top: toTopPick(top, tier, position, why),
     alts,
   };
 }
+
+const TIER_WORDS: [RegExp, Tier][] = [
+  [/\bhouse\s*league\b/i, "House League"],
+  [/\btravel\b/i, "Travel"],
+  [/\baaa\b/i, "AAA"],
+  [/\baa\b/i, "AA"],
+  [/\bbeginner\b/i, "Beginner"],
+];
+
+export function extractStatedTier(message: string): Tier | undefined {
+  if (!/\bi\b/i.test(message)) return undefined;
+  for (const [re, tier] of TIER_WORDS) {
+    if (re.test(message)) return tier;
+  }
+  return undefined;
+}
+
+export function extractStatedPosition(message: string): Position | undefined {
+  const m = message.match(/\bi\b[^.!?]{0,25}\b(forward|defense|goalie)\b/i);
+  if (!m) return undefined;
+  const word = m[1].toLowerCase();
+  if (word === "forward") return "Forward";
+  if (word === "defense") return "Defense";
+  return "Goalie";
+}
+
+export function extractStatedBudget(message: string): number | undefined {
+  const m =
+    message.match(/budget[^\d]{0,15}\$?\s*(\d{2,5})/i) ?? message.match(/\$\s*(\d{2,5})[^\d]{0,15}budget/i);
+  if (!m) return undefined;
+  const value = Number(m[1]);
+  return Number.isFinite(value) && value > 0 ? value : undefined;
+}
+
+function detectEquipId(lc: string): EquipId | null {
+  for (const e of equipment) {
+    if (lc.includes(e.name.toLowerCase()) || lc.includes(e.id)) return e.id;
+  }
+  if (lc.includes("skate")) return "skates";
+  if (lc.includes("stick")) return "stick";
+  if (lc.includes("helmet")) return "helmet";
+  return null;
+}
+
+const SUPERLATIVE_EXPENSIVE = /most expensive|priciest|top[\s-]of[\s-]the[\s-]line|best money can buy|best possible|best.{0,10}\bever\b/i;
+const SUPERLATIVE_CHEAPEST = /cheapest|least expensive|lowest price/i;
 
 export function deterministicChatReply(
   message: string,
   tier: Tier,
   position: Position,
   budget: number,
-): { reply: string; rec?: ChatRec } {
+): { reply: string; rec?: ChatRec; tier?: Tier; position?: Position; budget?: number } {
   const lc = message.toLowerCase();
-  let id: EquipId | null = null;
-  for (const e of equipment) {
-    if (lc.includes(e.name.toLowerCase()) || lc.includes(e.id)) {
-      id = e.id;
-      break;
+  const statedTier = extractStatedTier(message);
+  const statedPosition = extractStatedPosition(message);
+  const statedBudget = extractStatedBudget(message);
+  const effectiveTier = statedTier ?? tier;
+  const effectivePosition = statedPosition ?? position;
+  const effectiveBudget = statedBudget ?? budget;
+
+  const id = detectEquipId(lc);
+  if (!id) {
+    if (statedTier || statedPosition || statedBudget) {
+      return {
+        reply: "Got it, updated. What gear are you looking for next?",
+        tier: statedTier,
+        position: statedPosition,
+        budget: statedBudget,
+      };
     }
-  }
-  if (!id) {
-    if (lc.includes("skate")) id = "skates";
-    else if (lc.includes("stick")) id = "stick";
-    else if (lc.includes("helmet")) id = "helmet";
-  }
-  if (!id) {
     return {
       reply:
         'Got it. Tell me the piece of gear (helmet, skates, stick…), your level, and your budget and I\'ll find the best-fit model and where to buy it. Or tap "Find my gear" for the guided version.',
     };
   }
-  const rec = deterministicRecommendation(id, tier, position, budget);
+
+  if (SUPERLATIVE_EXPENSIVE.test(lc) || SUPERLATIVE_CHEAPEST.test(lc)) {
+    const all = catalog[id].candidates;
+    const wantExpensive = SUPERLATIVE_EXPENSIVE.test(lc);
+    const pick = all.reduce((a, b) =>
+      wantExpensive ? (cheapestStore(b).price > cheapestStore(a).price ? b : a) : cheapestStore(b).price < cheapestStore(a).price ? b : a,
+    );
+    const best = cheapestStore(pick);
+    return {
+      reply: `The ${wantExpensive ? "most premium" : "most affordable"} ${catalog[id].category.toLowerCase()} in our catalog is the ${pick.brand} ${pick.model} at $${best.price}.`,
+      rec: { id, category: catalog[id].category, brand: pick.brand, model: pick.model, price: best.price, store: best.name },
+      tier: statedTier,
+      position: statedPosition,
+      budget: statedBudget,
+    };
+  }
+
+  const rec = deterministicRecommendation(id, effectiveTier, effectivePosition, effectiveBudget);
   return {
-    reply: `For ${tier} ${position.toLowerCase()} at your budget, I'd go with the ${rec.top.brand} ${rec.top.model}. ${rec.top.why}`,
+    reply: `For ${effectiveTier} ${effectivePosition.toLowerCase()} at your budget, I'd go with the ${rec.top.brand} ${rec.top.model}. ${rec.top.why}`,
     rec: {
       id,
       category: rec.category,
@@ -116,6 +188,9 @@ export function deterministicChatReply(
       price: rec.top.price,
       store: rec.top.store,
     },
+    tier: statedTier,
+    position: statedPosition,
+    budget: statedBudget,
   };
 }
 
