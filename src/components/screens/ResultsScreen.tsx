@@ -235,7 +235,7 @@ export default function ResultsScreen({
             key={a.brand + a.model}
             style={{ background: "#fff", borderRadius: 16, padding: 13, display: "flex", alignItems: "center", gap: 13, boxShadow: "0 3px 12px rgba(19,38,63,.05)" }}
           >
-            <div style={{ position: "relative", width: 52, height: 52, borderRadius: 11, flexShrink: 0, background: "#EEF4FA", overflow: "hidden" }}>
+            <div style={{ position: "relative", width: 52, height: 52, borderRadius: 11, flexShrink: 0, background: "#EAF3FB", overflow: "hidden" }}>
               {equipId && <Image src={`/equipment/${equipId}.png`} alt={a.model} fill sizes="52px" style={{ objectFit: "contain", padding: 6 }} />}
             </div>
             <div style={{ flex: 1, minWidth: 0 }}>

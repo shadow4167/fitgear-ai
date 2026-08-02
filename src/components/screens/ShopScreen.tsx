@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { catalog } from "@/lib/gear-data";
 import { unlockCostFor } from "@/lib/game-economy";
 import { cheapestStore } from "@/lib/recommend";
@@ -59,15 +60,9 @@ export default function ShopScreen({ wallet, onBuy, onBack }: Props) {
                 opacity: owned ? 1 : 0.85,
               }}
             >
-              <div
-                style={{
-                  width: 52,
-                  height: 52,
-                  borderRadius: 11,
-                  flexShrink: 0,
-                  background: "repeating-linear-gradient(135deg,#EEF4FA,#EEF4FA 6px,#E1ECF6 6px,#E1ECF6 12px)",
-                }}
-              />
+              <div style={{ position: "relative", width: 52, height: 52, borderRadius: 11, flexShrink: 0, background: "#EAF3FB", overflow: "hidden" }}>
+                <Image src="/equipment/stick.png" alt={c.model} fill sizes="52px" style={{ objectFit: "contain", padding: 6 }} />
+              </div>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ fontSize: 11.5, fontWeight: 700, color: "var(--fg-brand)" }}>{c.brand}</div>
                 <div style={{ fontFamily: "var(--font-archivo)", fontWeight: 700, fontSize: 15, letterSpacing: "-.2px" }}>{c.model}</div>

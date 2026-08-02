@@ -187,7 +187,7 @@ export default function HomeScreen({ onFindGear, onAskGuide, onPlay, quickPicks 
             width: 38,
             height: 38,
             borderRadius: "50%",
-            background: "#E6F1FB",
+            background: "#EAF3FB",
             flexShrink: 0,
             overflow: "hidden",
           }}
