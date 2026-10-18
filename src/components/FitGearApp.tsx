@@ -48,7 +48,13 @@ export default function FitGearApp() {
   ]);
   const [typing, setTyping] = useState(false);
   const [draft, setDraft] = useState("");
-  const [result, setResult] = useState<ResultEntry | null>(null);
+  const [search, setSearch] = useState<{
+    res: ResultEntry;
+    tier: Tier;
+    position: Position;
+    budget: number;
+  } | null>(null);
+  const [chatResult, setChatResult] = useState<ResultEntry | null>(null);
   const [skipTypeStep, setSkipTypeStep] = useState(false);
   const [detailBack, setDetailBack] = useState<Screen>("results");
   const [wallet, setWallet] = useState<GameWallet>(() => loadWallet());
@@ -92,24 +98,23 @@ export default function FitGearApp() {
 
     let timerDone = false;
     let fetchedResult: ResultEntry | null = null;
+    let step = 0;
 
     function maybeFinish() {
       if (!timerDone || !fetchedResult) return;
-      setResult(fetchedResult);
+      setSearch({ res: fetchedResult, tier, position, budget });
       setTimeout(() => go("results"), 350);
     }
 
     searchTimer.current = setInterval(() => {
-      setSearchStep((prev) => {
-        const n = prev + 1;
-        if (n > searchSources.length) {
-          if (searchTimer.current) clearInterval(searchTimer.current);
-          timerDone = true;
-          maybeFinish();
-          return searchSources.length;
-        }
-        return n;
-      });
+      step += 1;
+      if (step > searchSources.length) {
+        if (searchTimer.current) clearInterval(searchTimer.current);
+        timerDone = true;
+        maybeFinish();
+        return;
+      }
+      setSearchStep(step);
     }, 460);
 
     fetch("/api/recommend", {
@@ -152,17 +157,16 @@ export default function FitGearApp() {
             budget?: number;
           }>,
       )
-      .then((data) => {
-        setMessages((m) => [...m, { role: "guide", text: data.reply, rec: data.rec }]);
-        if (data.tier) setTier(data.tier);
-        if (data.position) setPosition(data.position);
-        if (data.budget) setBudget(Math.min(BMAX, Math.max(BMIN, Math.round(data.budget))));
-      })
-      .catch(() => {
-        const fallback = deterministicChatReply(t, tier, position, budget);
-        setMessages((m) => [...m, { role: "guide", text: fallback.reply, rec: fallback.rec }]);
-      })
+      .then(applyChatReply)
+      .catch(() => applyChatReply(deterministicChatReply(t, tier, position, budget)))
       .finally(() => setTyping(false));
+  }
+
+  function applyChatReply(data: { reply: string; rec?: ChatRec; tier?: Tier; position?: Position; budget?: number }) {
+    setMessages((m) => [...m, { role: "guide", text: data.reply, rec: data.rec }]);
+    if (data.tier) setTier(data.tier);
+    if (data.position) setPosition(data.position);
+    if (data.budget) setBudget(Math.min(BMAX, Math.max(BMIN, Math.round(data.budget))));
   }
 
   function onSelectChatRec(rec: ChatRec) {
@@ -171,7 +175,7 @@ export default function FitGearApp() {
     );
     if (!candidate) return;
     const entry = catalog[rec.id];
-    setResult({
+    setChatResult({
       category: entry.category,
       low: entry.low,
       avg: entry.avg,
@@ -263,14 +267,14 @@ export default function FitGearApp() {
               recapBudget={"$" + budget}
             />
           )}
-          {screen === "results" && result && (
+          {screen === "results" && search && (
             <ResultsScreen
-              res={result}
-              budget={budget}
-              recapLevel={`${tier} ${position}`}
+              res={search.res}
+              budget={search.budget}
+              recapLevel={`${search.tier} ${search.position}`}
               recapDiv={division}
-              recapCat={result.category}
-              recapBudget={"$" + budget}
+              recapCat={search.res.category}
+              recapBudget={"$" + search.budget}
               onBack={() => go("budget")}
               onOpenDetail={() => {
                 setDetailBack("results");
@@ -280,10 +284,18 @@ export default function FitGearApp() {
               onAskGuide={() => go("chat")}
             />
           )}
-          {screen === "detail" && result && (
+          {screen === "detail" && detailBack === "chat" && chatResult && (
             <DetailScreen
-              res={result}
+              res={chatResult}
               recapLevel={`${tier} ${position}`}
+              onBack={() => go("chat")}
+              onAskGuide={() => go("chat")}
+            />
+          )}
+          {screen === "detail" && detailBack === "results" && search && (
+            <DetailScreen
+              res={search.res}
+              recapLevel={`${search.tier} ${search.position}`}
               onBack={() => go(detailBack)}
               onAskGuide={() => go("chat")}
             />
@@ -331,7 +343,10 @@ export default function FitGearApp() {
           <BottomNav
             screen={screen}
             onHome={() => go("home")}
-            onFind={() => go("level")}
+            onFind={() => {
+              setSkipTypeStep(false);
+              go("level");
+            }}
             onChat={() => go("chat")}
           />
         )}
