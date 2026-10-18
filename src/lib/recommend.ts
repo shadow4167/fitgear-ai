@@ -145,13 +145,15 @@ const SKILL_TIPS: [RegExp, string][] = [
   ],
 ];
 
+function hasWord(lc: string, term: string): boolean {
+  return new RegExp(`\\b${term}s?\\b`).test(lc);
+}
+
 function detectEquipId(lc: string): EquipId | null {
   for (const e of equipment) {
-    if (lc.includes(e.name.toLowerCase()) || lc.includes(e.id)) return e.id;
+    if (hasWord(lc, e.name.toLowerCase()) || hasWord(lc, e.id)) return e.id;
   }
-  if (lc.includes("skate")) return "skates";
-  if (lc.includes("stick")) return "stick";
-  if (lc.includes("helmet")) return "helmet";
+  if (hasWord(lc, "skate")) return "skates";
   return null;
 }
 

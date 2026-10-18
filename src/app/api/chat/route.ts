@@ -64,8 +64,17 @@ function catalogListing(): string {
     .join("\n");
 }
 
+const MAX_MESSAGE_CHARS = 500;
+const MAX_HISTORY = 20;
+
 export async function POST(req: Request) {
-  const { message, history, tier, position, budget } = (await req.json()) as ChatBody;
+  const body = (await req.json()) as ChatBody;
+  const { message, tier, position, budget } = body;
+  if (typeof message !== "string" || message.length > MAX_MESSAGE_CHARS || !Array.isArray(body.history)) {
+    return Response.json({ error: "Invalid message" }, { status: 400 });
+  }
+  // Caps the prompt size so oversized requests can't run up the AI bill.
+  const history = body.history.slice(-MAX_HISTORY).map((m) => ({ ...m, text: String(m.text).slice(0, MAX_MESSAGE_CHARS) }));
 
   const math = evaluateArithmetic(message);
   if (math && isLikelyPureMath(message)) {
@@ -169,6 +178,6 @@ ${catalogListing()}`,
   } catch (err) {
     console.error("[api/chat] Gemini call failed, using deterministic fallback:", err);
     const fallback = deterministicChatReply(message, tier, position, budget);
-    return Response.json({ reply: fallback.reply, rec: fallback.rec });
+    return Response.json(fallback);
   }
 }

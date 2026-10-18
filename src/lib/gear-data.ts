@@ -16,7 +16,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
     category: "Helmet",
     low: 49,
     avg: 224,
-    high: 299,
+    high: 300,
     candidates: [
       {
         id: "helmet-ccm-fitlite",
@@ -377,7 +377,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
     category: "Skates",
     low: 99,
     avg: 573,
-    high: 799,
+    high: 800,
     candidates: [
       {
         id: "skates-bauer-vaporx3",
@@ -729,7 +729,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
     category: "Stick",
     low: 39,
     avg: 242,
-    high: 299,
+    high: 300,
     candidates: [
       {
         id: "stick-sherwood-rekkerelementone",
@@ -1073,7 +1073,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
     category: "Gloves",
     low: 39,
     avg: 141,
-    high: 189,
+    high: 190,
     candidates: [
       {
         id: "gloves-true-catalyst9",
@@ -1409,7 +1409,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
     category: "Shoulder Pads",
     low: 45,
     avg: 138,
-    high: 179,
+    high: 180,
     candidates: [
       {
         id: "shoulder-ccm-jetspeedft4",
@@ -1749,7 +1749,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
     category: "Pants",
     low: 69,
     avg: 165,
-    high: 199,
+    high: 200,
     candidates: [
       {
         id: "pants-ccm-jetspeedft4",
@@ -2091,7 +2091,7 @@ export const catalog: Record<EquipId, GearCatalogEntry> = {
     category: "Elbow Pads",
     low: 29,
     avg: 84,
-    high: 109,
+    high: 110,
     candidates: [
       {
         id: "elbow-bauer-vapor3x",

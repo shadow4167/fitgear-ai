@@ -19,8 +19,27 @@ interface RecommendModelOutput {
   alternates: { id: string; note: string }[];
 }
 
+const TIERS: Tier[] = ["Beginner", "House League", "Travel", "AA", "AAA"];
+const POSITIONS: Position[] = ["Forward", "Defense", "Goalie"];
+const DIVISIONS: Division[] = ["U10", "U12", "U14", "U16", "U18"];
+
+function isValidBody(b: RecommendBody): boolean {
+  return (
+    Object.hasOwn(catalog, b.equip) &&
+    TIERS.includes(b.tier) &&
+    POSITIONS.includes(b.position) &&
+    DIVISIONS.includes(b.division) &&
+    typeof b.budget === "number" &&
+    Number.isFinite(b.budget)
+  );
+}
+
 export async function POST(req: Request) {
-  const { equip, tier, position, division, budget } = (await req.json()) as RecommendBody;
+  const body = (await req.json()) as RecommendBody;
+  if (!isValidBody(body)) {
+    return Response.json({ error: "Invalid request" }, { status: 400 });
+  }
+  const { equip, tier, position, division, budget } = body;
   const entry = catalog[equip];
   const fitting = eligibleCandidates(equip, tier, position);
   const price = (c: GearCandidate) => cheapestStore(c).price;

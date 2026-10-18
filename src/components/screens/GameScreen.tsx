@@ -369,7 +369,7 @@ export default function GameScreen({
   useEffect(() => {
     draw();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userTeamId, hit]);
+  }, [userTeamId, hit, onIce, shotOriginX, passedThisRound, busy]);
 
   function resetRound() {
     setOnIce(generateOnIceSkaters(PUCK_START.x, ON_ICE_Y));
@@ -470,6 +470,7 @@ export default function GameScreen({
         },
       );
     } else {
+      clearCountdown();
       setBusyBoth(true);
       setPassResult("intercepted");
       passTimeoutRef.current = setTimeout(() => {
