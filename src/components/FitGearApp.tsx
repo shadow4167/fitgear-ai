@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import styles from "./AppShell.module.css";
 import { catalog, equipment, searchSources } from "@/lib/gear-data";
 import { deterministicChatReply, deterministicRecommendation, toTopPick } from "@/lib/recommend";
-import { loadWallet, saveWallet } from "@/lib/game-storage";
+import { loadWallet, loadWelcomeSeen, saveWallet, saveWelcomeSeen } from "@/lib/game-storage";
 import { GAME_TEAMS } from "@/lib/game-teams";
 import type {
   ChatMessage,
@@ -18,6 +18,7 @@ import type {
   Tier,
 } from "@/types/fitgear";
 import BottomNav from "./BottomNav";
+import WelcomeScreen from "./screens/WelcomeScreen";
 import HomeScreen from "./screens/HomeScreen";
 import LevelScreen from "./screens/LevelScreen";
 import TypeScreen from "./screens/TypeScreen";
@@ -28,6 +29,8 @@ import DetailScreen from "./screens/DetailScreen";
 import ChatScreen from "./screens/ChatScreen";
 import GameScreen from "./screens/GameScreen";
 import ShopScreen from "./screens/ShopScreen";
+
+const noopSubscribe = () => () => {};
 
 const BMIN = 50;
 const BMAX = 1500;
@@ -68,6 +71,11 @@ export default function FitGearApp() {
   useEffect(() => {
     saveWallet(wallet);
   }, [wallet]);
+
+  // Server snapshot is "seen" because localStorage doesn't exist during the prerender.
+  const welcomeSeen = useSyncExternalStore(noopSubscribe, loadWelcomeSeen, () => true);
+  const [welcomeDismissed, setWelcomeDismissed] = useState(false);
+  const showWelcome = !welcomeSeen && !welcomeDismissed;
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const searchTimer = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -188,7 +196,7 @@ export default function FitGearApp() {
   }
 
   const catalogEntry = catalog[equip];
-  const showNav = screen === "home" || screen === "results";
+  const showNav = !showWelcome && (screen === "home" || screen === "results");
 
   const quickPicks = (["helmet", "skates", "stick", "gloves"] as EquipId[]).map(
     (id) => {
@@ -211,7 +219,15 @@ export default function FitGearApp() {
     <div className={styles.page}>
       <div className={styles.frame}>
         <div ref={scrollRef} className={`${styles.scroll} fgScroll`}>
-          {screen === "home" && (
+          {showWelcome && (
+            <WelcomeScreen
+              onContinue={() => {
+                saveWelcomeSeen();
+                setWelcomeDismissed(true);
+              }}
+            />
+          )}
+          {!showWelcome && screen === "home" && (
             <HomeScreen
               onFindGear={() => {
                 setSkipTypeStep(false);
