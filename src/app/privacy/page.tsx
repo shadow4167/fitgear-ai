@@ -45,6 +45,11 @@ export default function PrivacyPage() {
 
       <h2>Changes</h2>
       <p>If this policy changes, we&apos;ll update this page and the date at the top.</p>
+
+      <h2>Contact</h2>
+      <p>
+        Questions? Email <a href="mailto:neil.benjwal@icloud.com">neil.benjwal@icloud.com</a>.
+      </p>
     </main>
   );
 }
